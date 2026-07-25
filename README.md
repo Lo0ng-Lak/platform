@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Platform — Website Builder kéo thả
 
-## Getting Started
+Nền tảng dựng website kiểu Shopify / WordPress: kéo thả block, tạo nhiều trang, xuất bản ngay.
 
-First, run the development server:
+## Chạy local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Website: http://localhost:3000
+- Dashboard: http://localhost:3000/dashboard
+- Editor trang chủ: http://localhost:3000/edit
+- Editor trang khác: http://localhost:3000/about/edit
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cách dùng
 
-## Learn More
+1. Vào **Dashboard** → bấm **Seed trang chủ demo** (hoặc tạo trang mới)
+2. Bấm **Chỉnh sửa** để mở editor kéo thả
+3. Kéo block từ panel trái (Navbar, Hero, Section, Columns, Card…)
+4. Chỉnh props bên phải → bấm **Publish**
+5. Xem trang live tại đường dẫn tương ứng
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js (App Router)
+- Puck (`@puckeditor/core`) — visual page builder
+- Tailwind CSS v4
+- Lưu trang bằng `database.json` (file local, dễ thay bằng DB sau)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Cấu trúc chính
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/puck.config.tsx` — thư viện block / container
+- `src/app/dashboard` — quản lý trang
+- `src/app/puck` — editor
+- `src/lib/pages.ts` — đọc/ghi trang
+- `database.json` — dữ liệu trang đã publish

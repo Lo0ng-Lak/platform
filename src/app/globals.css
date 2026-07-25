@@ -1,26 +1,84 @@
 @import "tailwindcss";
+@source "../puck.config.tsx";
+@source "../puck/**/*.{js,ts,jsx,tsx}";
+@source "../components/**/*.{js,ts,jsx,tsx}";
+@source "./**/*.{js,ts,jsx,tsx,mdx}";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #1c1917;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+/* Region hints inside Puck editor */
+[class*="Puck"] .builder-region {
+  position: relative;
+}
+
+[class*="Puck"] .builder-region::before {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  z-index: 20;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+[class*="Puck"] .builder-region-header {
+  outline: 1px dashed #059669;
+  outline-offset: -1px;
+  min-height: 56px;
+}
+
+[class*="Puck"] .builder-region-header::before {
+  content: "HEADER";
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+[class*="Puck"] .builder-region-body {
+  outline: 1px dashed #2563eb;
+  outline-offset: -1px;
+  min-height: 120px;
+}
+
+[class*="Puck"] .builder-region-body::before {
+  content: "BODY";
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+[class*="Puck"] .builder-region-footer {
+  outline: 1px dashed #a16207;
+  outline-offset: -1px;
+  min-height: 56px;
+}
+
+[class*="Puck"] .builder-region-footer::before {
+  content: "FOOTER";
+  background: #fefce8;
+  color: #854d0e;
 }
