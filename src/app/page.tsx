@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
-import { PageRender } from "./[...puckPath]/client";
-import { getPage } from "@/lib/pages";
+import { SiteChrome } from "@/components/builder/SiteChrome";
+import { getFooter, getHeader, getPage, getSettings } from "@/lib/pages";
 
-export const metadata: Metadata = {
-  title: "Trang chủ",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = getSettings();
+  return {
+    title: settings.siteName || "Trang chủ",
+    description: settings.tagline || undefined,
+    icons: settings.faviconUrl ? [{ url: settings.faviconUrl }] : undefined,
+  };
+}
 
 export default function HomePage() {
-  const data = getPage("/");
+  const page = getPage("/");
+  const header = getHeader();
+  const footer = getFooter();
+  const settings = getSettings();
 
-  if (!data) {
+  if (!page) {
     return (
       <main className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center gap-4 px-6 text-center">
         <h1 className="text-3xl font-bold text-stone-900">Website đang được chuẩn bị</h1>
@@ -18,7 +26,14 @@ export default function HomePage() {
     );
   }
 
-  return <PageRender data={data} />;
+  return (
+    <SiteChrome
+      header={header}
+      footer={footer}
+      page={page}
+      settings={settings}
+    />
+  );
 }
 
 export const dynamic = "force-dynamic";

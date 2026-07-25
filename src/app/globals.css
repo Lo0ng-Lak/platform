@@ -27,7 +27,40 @@ h3 {
   font-family: var(--font-display);
 }
 
-/* Region hints inside Puck editor */
+/* Responsive visibility for containers */
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Kill accidental gaps between site chrome regions */
+[data-site-region="header"],
+[data-site-region="body"],
+[data-site-region="footer"] {
+  margin: 0;
+  padding: 0;
+}
+
+[data-site-region="header"] > div,
+[data-site-region="body"] > div,
+[data-site-region="footer"] > div {
+  margin: 0;
+}
+
+/* Region hints inside Puck editor only */
 [class*="Puck"] .builder-region {
   position: relative;
 }

@@ -1,6 +1,15 @@
+"use client";
+
 import type { Config, Slot } from "@puckeditor/core";
 import type { CSSProperties, ComponentType } from "react";
+import { imageField } from "@/components/builder/ImageField";
+import { useSiteSettings } from "@/components/builder/SiteSettingsContext";
 import { advancedSectionComponents } from "@/puck/advanced-sections";
+import {
+  catalogCategoryMap,
+  catalogSectionComponents,
+} from "@/puck/catalog-index";
+import { layoutPresetComponents } from "@/puck/layout-presets";
 import {
   ContainerShell,
   backgroundFields,
@@ -11,7 +20,10 @@ import {
   defaultShadow,
   defaultSpacing,
   defaultTypography,
-  layoutFields,
+  layoutAdvancedFields,
+  layoutFlexFields,
+  layoutPositionFields,
+  layoutStructureFields,
   shadowFields,
   spacingFields,
   spacingToCss,
@@ -34,39 +46,181 @@ type SlotRender = ComponentType<{
 type RootProps = {
   title: string;
   pageBackground: string;
-  contentMaxWidth: number;
-  header: Slot;
-  footer: Slot;
 };
 
-type ContainerProps = {
-  layout: LayoutSettings;
+type StructureProps = {
+  tag: LayoutSettings["tag"];
+  display: LayoutSettings["display"];
+  contentWidth: LayoutSettings["contentWidth"];
+  width: number;
+  customWidth: number;
+  customWidthUnit: LayoutSettings["customWidthUnit"];
+  containerAlign: LayoutSettings["containerAlign"];
+  heightMode: LayoutSettings["heightMode"];
+  height: number;
+  minHeight: number;
+  maxHeight: number;
+};
+
+type FlexGridProps = {
+  direction: LayoutSettings["direction"];
+  justifyContent: LayoutSettings["justifyContent"];
+  alignItems: LayoutSettings["alignItems"];
+  alignContent: LayoutSettings["alignContent"];
+  flexWrap: LayoutSettings["flexWrap"];
+  gap: number;
+  rowGap: number;
+  columnGap: number;
+  gridColumns: number;
+  gridRows: number;
+  gridAutoFlow: LayoutSettings["gridAutoFlow"];
+};
+
+type PositionProps = {
+  position: LayoutSettings["position"];
+  zIndex: number;
+  offsetTop: number;
+  offsetRight: number;
+  offsetBottom: number;
+  offsetLeft: number;
+  stickyOffset: number;
+};
+
+type AdvancedProps = {
+  overflow: LayoutSettings["overflow"];
+  overflowX: LayoutSettings["overflowX"];
+  overflowY: LayoutSettings["overflowY"];
+  opacity: number;
+  hideDesktop: LayoutSettings["hideDesktop"];
+  hideTablet: LayoutSettings["hideTablet"];
+  hideMobile: LayoutSettings["hideMobile"];
+};
+
+type AppearanceProps = {
   padding: SpacingBox;
   margin: SpacingBox;
   background: BackgroundSettings;
   border: BorderSettings;
   shadow: ShadowSettings;
+  position: PositionProps;
+  advanced: AdvancedProps;
+};
+
+type ContainerProps = {
+  structure: StructureProps;
+  flexGrid: FlexGridProps;
+  /** @deprecated flat fields — data cũ */
+  position?: PositionProps;
+  advanced?: AdvancedProps;
+  layout?: LayoutSettings;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border?: BorderSettings;
+  shadow?: ShadowSettings;
+  appearance?: AppearanceProps;
   children: Slot;
+};
+
+type WidgetSpacing = {
+  padding: SpacingBox;
+  margin: SpacingBox;
+};
+
+type DividerProps = {
+  color: string;
+  thickness: number;
+  width: number;
+  align: "left" | "center" | "right";
+  style: "solid" | "dashed" | "dotted";
+  spacing?: { margin: SpacingBox };
+  margin?: SpacingBox;
+};
+
+type IconBoxProps = {
+  icon: string;
+  title: string;
+  description: string;
+  iconSize: number;
+  iconColor: string;
+  typographyTitle: TypographySettings;
+  typographyDesc: TypographySettings;
+  align: "left" | "center";
+  spacing?: WidgetSpacing & { background?: BackgroundSettings };
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border: BorderSettings;
+  shadow: ShadowSettings;
+};
+
+type NavbarProps = {
+  brand: string;
+  logoUrl: string;
+  logoHeight?: number;
+  useSiteLogo?: "yes" | "no";
+  link1Label: string;
+  link1Href: string;
+  link2Label: string;
+  link2Href: string;
+  link3Label: string;
+  link3Href: string;
+  ctaLabel: string;
+  ctaHref: string;
+  background: string;
+  textColor: string;
+  sticky: "yes" | "no";
+  spacing?: { padding: SpacingBox };
+  padding?: SpacingBox;
+};
+
+type FooterProps = {
+  brand: string;
+  text: string;
+  link1Label: string;
+  link1Href: string;
+  link2Label: string;
+  link2Href: string;
+  background: string;
+  textColor: string;
+  spacing?: { padding: SpacingBox };
+  padding?: SpacingBox;
+};
+
+type ColumnAppearance = {
+  padding: SpacingBox;
+  margin: SpacingBox;
+  background: BackgroundSettings;
+  border: BorderSettings;
+  shadow: ShadowSettings;
 };
 
 type ColumnProps = {
   width: number;
+  verticalAlign: "stretch" | "flex-start" | "center" | "flex-end";
+  appearance?: ColumnAppearance;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border?: BorderSettings;
+  shadow?: ShadowSettings;
+  children: Slot;
+};
+
+type ColumnsAppearance = {
   padding: SpacingBox;
   margin: SpacingBox;
   background: BackgroundSettings;
-  border: BorderSettings;
-  shadow: ShadowSettings;
-  verticalAlign: "stretch" | "flex-start" | "center" | "flex-end";
-  children: Slot;
 };
 
 type ColumnsProps = {
   columns: "1" | "2" | "3" | "4" | "5" | "6";
   gap: number;
   stackOnMobile: "yes" | "no";
-  padding: SpacingBox;
-  margin: SpacingBox;
-  background: BackgroundSettings;
+  appearance?: ColumnsAppearance;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
   col1: Slot;
   col2: Slot;
   col3: Slot;
@@ -79,15 +233,18 @@ type HeadingProps = {
   text: string;
   tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   typography: TypographySettings;
-  padding: SpacingBox;
-  margin: SpacingBox;
+  spacing?: WidgetSpacing;
+  /** @deprecated flat — data cũ */
+  padding?: SpacingBox;
+  margin?: SpacingBox;
 };
 
 type TextProps = {
   text: string;
   typography: TypographySettings;
-  padding: SpacingBox;
-  margin: SpacingBox;
+  spacing?: WidgetSpacing;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
 };
 
 type ImageProps = {
@@ -99,8 +256,9 @@ type ImageProps = {
   aspectRatio: "auto" | "16/9" | "4/3" | "1/1" | "3/4";
   border: BorderSettings;
   shadow: ShadowSettings;
-  padding: SpacingBox;
-  margin: SpacingBox;
+  spacing?: WidgetSpacing;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
 };
 
 type ButtonProps = {
@@ -113,66 +271,14 @@ type ButtonProps = {
   background: string;
   hoverBackground: string;
   border: BorderSettings;
-  padding: SpacingBox;
-  margin: SpacingBox;
+  spacing?: WidgetSpacing;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
 };
 
 type SpacerProps = {
   height: number;
   hideOnMobile: "yes" | "no";
-};
-
-type DividerProps = {
-  color: string;
-  thickness: number;
-  width: number;
-  align: "left" | "center" | "right";
-  style: "solid" | "dashed" | "dotted";
-  margin: SpacingBox;
-};
-
-type IconBoxProps = {
-  icon: string;
-  title: string;
-  description: string;
-  iconSize: number;
-  iconColor: string;
-  typographyTitle: TypographySettings;
-  typographyDesc: TypographySettings;
-  align: "left" | "center";
-  padding: SpacingBox;
-  margin: SpacingBox;
-  background: BackgroundSettings;
-  border: BorderSettings;
-  shadow: ShadowSettings;
-};
-
-type NavbarProps = {
-  brand: string;
-  link1Label: string;
-  link1Href: string;
-  link2Label: string;
-  link2Href: string;
-  link3Label: string;
-  link3Href: string;
-  ctaLabel: string;
-  ctaHref: string;
-  background: string;
-  textColor: string;
-  sticky: "yes" | "no";
-  padding: SpacingBox;
-};
-
-type FooterProps = {
-  brand: string;
-  text: string;
-  link1Label: string;
-  link1Href: string;
-  link2Label: string;
-  link2Href: string;
-  background: string;
-  textColor: string;
-  padding: SpacingBox;
 };
 
 type Props = {
@@ -194,84 +300,409 @@ type Props = {
   Accordion: Record<string, unknown>;
   Testimonials: Record<string, unknown>;
   Video: Record<string, unknown>;
+  SplitMedia: Record<string, unknown>;
+  SidebarLayout: Record<string, unknown>;
+  AsymmetricGrid: Record<string, unknown>;
+  CardGridLayout: Record<string, unknown>;
+  BannerHero: Record<string, unknown>;
+  NarrowCenter: Record<string, unknown>;
+  StatsRow: Record<string, unknown>;
+  LogoCloud: Record<string, unknown>;
+  PricingLayout: Record<string, unknown>;
+  ZigZag: Record<string, unknown>;
+  StickyScroll: Record<string, unknown>;
+  OverlayCard: Record<string, unknown>;
+  BentoGrid: Record<string, unknown>;
+  MagazineLayout: Record<string, unknown>;
+  CtaBand: Record<string, unknown>;
+  ProcessSteps: Record<string, unknown>;
+  TimelineLayout: Record<string, unknown>;
+  ContactSplit: Record<string, unknown>;
+  FeatureRows: Record<string, unknown>;
+  QuoteFeature: Record<string, unknown>;
+  TwoColumnCompare: Record<string, unknown>;
+  HeroCentered: Record<string, unknown>;
+  MosaicFour: Record<string, unknown>;
 };
 
 const containerFieldGroup = {
-  layout: {
+  structure: {
     type: "object" as const,
-    label: "⚙️ Layout",
-    objectFields: layoutFields,
+    label: "📐 Cấu trúc & Kích thước",
+    objectFields: layoutStructureFields,
   },
-  padding: {
+  flexGrid: {
     type: "object" as const,
-    label: "📦 Padding",
-    objectFields: spacingFields,
-  },
-  margin: {
-    type: "object" as const,
-    label: "↔️ Margin",
-    objectFields: spacingFields,
-  },
-  background: {
-    type: "object" as const,
-    label: "🎨 Background",
-    objectFields: backgroundFields,
-  },
-  border: {
-    type: "object" as const,
-    label: "⬜ Border",
-    objectFields: borderFields,
-  },
-  shadow: {
-    type: "object" as const,
-    label: "🌑 Box Shadow",
-    objectFields: shadowFields,
+    label: "🔀 Flex / Grid",
+    objectFields: layoutFlexFields,
   },
   children: {
     type: "slot" as const,
     label: "Nội dung bên trong",
   },
+  appearance: {
+    type: "object" as const,
+    label: "⚙️ Style (padding / margin / nền / viền)",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+      background: {
+        type: "object" as const,
+        label: "Background",
+        objectFields: backgroundFields,
+      },
+      border: {
+        type: "object" as const,
+        label: "Border",
+        objectFields: borderFields,
+      },
+      shadow: {
+        type: "object" as const,
+        label: "Box Shadow",
+        objectFields: shadowFields,
+      },
+      position: {
+        type: "object" as const,
+        label: "Position",
+        objectFields: layoutPositionFields,
+      },
+      advanced: {
+        type: "object" as const,
+        label: "Overflow & Ẩn hiện",
+        objectFields: layoutAdvancedFields,
+      },
+    },
+  },
+};
+
+const defaultStructure = (): StructureProps => {
+  const d = defaultLayout();
+  return {
+    tag: d.tag,
+    display: d.display,
+    contentWidth: d.contentWidth,
+    width: d.width,
+    customWidth: d.customWidth,
+    customWidthUnit: d.customWidthUnit,
+    containerAlign: d.containerAlign,
+    heightMode: d.heightMode,
+    height: d.height,
+    minHeight: d.minHeight,
+    maxHeight: d.maxHeight,
+  };
+};
+
+const defaultFlexGrid = (): FlexGridProps => {
+  const d = defaultLayout();
+  return {
+    direction: d.direction,
+    justifyContent: d.justifyContent,
+    alignItems: d.alignItems,
+    alignContent: d.alignContent,
+    flexWrap: d.flexWrap,
+    gap: d.gap,
+    rowGap: d.rowGap,
+    columnGap: d.columnGap,
+    gridColumns: d.gridColumns,
+    gridRows: d.gridRows,
+    gridAutoFlow: d.gridAutoFlow,
+  };
+};
+
+const defaultPosition = (): PositionProps => {
+  const d = defaultLayout();
+  return {
+    position: d.position,
+    zIndex: d.zIndex,
+    offsetTop: d.offsetTop,
+    offsetRight: d.offsetRight,
+    offsetBottom: d.offsetBottom,
+    offsetLeft: d.offsetLeft,
+    stickyOffset: d.stickyOffset,
+  };
+};
+
+const defaultAdvanced = (): AdvancedProps => {
+  const d = defaultLayout();
+  return {
+    overflow: d.overflow,
+    overflowX: d.overflowX,
+    overflowY: d.overflowY,
+    opacity: d.opacity,
+    hideDesktop: d.hideDesktop,
+    hideTablet: d.hideTablet,
+    hideMobile: d.hideMobile,
+  };
 };
 
 const containerDefaults = {
-  layout: defaultLayout({
-    tag: "section",
-    direction: "column",
-    gap: 24,
-  }),
-  padding: defaultSpacing(40, { left: 24, right: 24 }),
-  margin: defaultSpacing(0),
-  background: defaultBackground({ color: "#ffffff" }),
-  border: defaultBorder(),
-  shadow: defaultShadow(),
+  structure: defaultStructure(),
+  flexGrid: defaultFlexGrid(),
+  appearance: {
+    padding: defaultSpacing(40, { left: 24, right: 24 }),
+    margin: defaultSpacing(0),
+    background: defaultBackground({ color: "#ffffff" }),
+    border: defaultBorder(),
+    shadow: defaultShadow(),
+    position: defaultPosition(),
+    advanced: defaultAdvanced(),
+  },
   children: [],
 };
 
-function renderContainer({
-  layout,
-  padding,
-  margin,
-  background,
-  border,
-  shadow,
-  children: Children,
-}: {
-  layout: LayoutSettings;
-  padding: SpacingBox;
-  margin: SpacingBox;
-  background: BackgroundSettings;
-  border: BorderSettings;
-  shadow: ShadowSettings;
+function resolveAppearance(props: {
+  appearance?: Partial<AppearanceProps>;
+  position?: PositionProps;
+  advanced?: AdvancedProps;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border?: BorderSettings;
+  shadow?: ShadowSettings;
+}): AppearanceProps {
+  const a = props.appearance || {};
+  return {
+    padding: a.padding || props.padding || defaultSpacing(0),
+    margin: a.margin || props.margin || defaultSpacing(0),
+    background: a.background || props.background || defaultBackground(),
+    border: a.border || props.border || defaultBorder(),
+    shadow: a.shadow || props.shadow || defaultShadow(),
+    position: a.position || props.position || defaultPosition(),
+    advanced: a.advanced || props.advanced || defaultAdvanced(),
+  };
+}
+
+const widgetSpacingFields = {
+  spacing: {
+    type: "object" as const,
+    label: "⚙️ Spacing",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+    },
+  },
+};
+
+const widgetMarginField = {
+  spacing: {
+    type: "object" as const,
+    label: "⚙️ Spacing",
+    objectFields: {
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+    },
+  },
+};
+
+const widgetPaddingField = {
+  spacing: {
+    type: "object" as const,
+    label: "⚙️ Spacing",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+    },
+  },
+};
+
+const iconBoxAppearanceFields = {
+  spacing: {
+    type: "object" as const,
+    label: "⚙️ Spacing",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+      background: {
+        type: "object" as const,
+        label: "Background",
+        objectFields: backgroundFields,
+      },
+    },
+  },
+};
+
+const columnsAppearanceFields = {
+  appearance: {
+    type: "object" as const,
+    label: "⚙️ Spacing / nền",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+      background: {
+        type: "object" as const,
+        label: "Background",
+        objectFields: backgroundFields,
+      },
+    },
+  },
+};
+
+const columnAppearanceFields = {
+  appearance: {
+    type: "object" as const,
+    label: "⚙️ Spacing / nền",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+      background: {
+        type: "object" as const,
+        label: "Background",
+        objectFields: backgroundFields,
+      },
+      border: {
+        type: "object" as const,
+        label: "Border",
+        objectFields: borderFields,
+      },
+      shadow: {
+        type: "object" as const,
+        label: "Box Shadow",
+        objectFields: shadowFields,
+      },
+    },
+  },
+};
+
+function resolveWidgetSpacing(props: {
+  spacing?: Partial<WidgetSpacing>;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+}) {
+  const s = props.spacing || {};
+  return {
+    padding: s.padding || props.padding || defaultSpacing(0),
+    margin: s.margin || props.margin || defaultSpacing(0),
+  };
+}
+
+function resolveColumnsAppearance(props: {
+  appearance?: Partial<ColumnsAppearance>;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+}) {
+  const a = props.appearance || {};
+  return {
+    padding: a.padding || props.padding || defaultSpacing(24),
+    margin: a.margin || props.margin || defaultSpacing(0),
+    background: a.background || props.background || defaultBackground({ color: "transparent" }),
+  };
+}
+
+function resolveColumnAppearance(props: {
+  appearance?: Partial<ColumnAppearance>;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border?: BorderSettings;
+  shadow?: ShadowSettings;
+}) {
+  const a = props.appearance || {};
+  return {
+    padding: a.padding || props.padding || defaultSpacing(16),
+    margin: a.margin || props.margin || defaultSpacing(0),
+    background: a.background || props.background || defaultBackground({ color: "transparent" }),
+    border: a.border || props.border || defaultBorder(),
+    shadow: a.shadow || props.shadow || defaultShadow(),
+  };
+}
+
+function mergeLayoutParts(parts: {
+  structure?: Partial<StructureProps>;
+  flexGrid?: Partial<FlexGridProps>;
+  position?: Partial<PositionProps>;
+  advanced?: Partial<AdvancedProps>;
+  layout?: Partial<LayoutSettings>;
+}): LayoutSettings {
+  return {
+    ...defaultLayout(),
+    ...(parts.layout || {}),
+    ...(parts.structure || {}),
+    ...(parts.flexGrid || {}),
+    ...(parts.position || {}),
+    ...(parts.advanced || {}),
+  };
+}
+
+function renderContainer(props: {
+  structure?: StructureProps;
+  flexGrid?: FlexGridProps;
+  position?: PositionProps;
+  advanced?: AdvancedProps;
+  layout?: LayoutSettings;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+  background?: BackgroundSettings;
+  border?: BorderSettings;
+  shadow?: ShadowSettings;
+  appearance?: AppearanceProps;
   children: SlotRender;
 }) {
+  const appearance = resolveAppearance(props);
+  const Children = props.children;
+
+  const layout = mergeLayoutParts({
+    structure: props.structure,
+    flexGrid: props.flexGrid,
+    position: appearance.position,
+    advanced: appearance.advanced,
+    layout: props.layout,
+  });
+
   return (
     <ContainerShell
       layout={layout}
-      padding={padding}
-      margin={margin}
-      background={background}
-      border={border}
-      shadow={shadow}
+      padding={appearance.padding}
+      margin={appearance.margin}
+      background={appearance.background}
+      border={appearance.border}
+      shadow={appearance.shadow}
     >
       <Children
         style={{
@@ -300,105 +731,110 @@ const buttonSizeMap = {
 
 export const config: Config<Props, RootProps> = {
   root: {
-    label: "Page (Header / Body / Footer)",
+    label: "Trang (Body)",
     fields: {
       title: { type: "text", label: "Tiêu đề trang" },
       pageBackground: { type: "text", label: "Màu nền trang" },
-      contentMaxWidth: {
-        type: "number",
-        label: "Gợi ý max-width body (px)",
-        min: 320,
-      },
-      header: {
-        type: "slot",
-        label: "HEADER — kéo Navbar / Container vào đây",
-        allow: ["Navbar", "Container", "InnerContainer", "Heading", "Button"],
-      },
-      footer: {
-        type: "slot",
-        label: "FOOTER — kéo Footer / Container vào đây",
-        allow: ["Footer", "Container", "InnerContainer", "Heading", "Text", "Button"],
-      },
     },
     defaultProps: {
       title: "Trang mới",
       pageBackground: "#fafaf9",
-      contentMaxWidth: 1140,
-      header: [],
-      footer: [],
     },
-    render: ({
-      children,
-      title,
-      pageBackground,
-      header: Header,
-      footer: Footer,
-    }) => (
+    render: ({ children, title, pageBackground }) => (
       <div
         data-page-title={title}
+        data-region="body"
         style={{
-          minHeight: "100vh",
-          background: pageBackground,
-          display: "flex",
-          flexDirection: "column",
+          background: pageBackground || "transparent",
+          width: "100%",
         }}
       >
-        <div data-region="header" className="builder-region builder-region-header">
-          <Header
-            minEmptyHeight={72}
-            style={{ width: "100%", minHeight: 56 }}
-          />
-        </div>
-        <main
-          data-region="body"
-          className="builder-region builder-region-body"
-          style={{ flex: 1, width: "100%" }}
-        >
-          {children}
-        </main>
-        <div data-region="footer" className="builder-region builder-region-footer">
-          <Footer
-            minEmptyHeight={72}
-            style={{ width: "100%", minHeight: 56 }}
-          />
-        </div>
+        {children}
       </div>
     ),
   },
   categories: {
-    layout: {
-      title: "Layout",
-      components: ["Container", "InnerContainer", "Columns", "Column"],
-    },
-    sections: {
-      title: "Sections (ưu điểm riêng)",
-      components: ["Slider", "Gallery", "Accordion", "Testimonials", "Video"],
-    },
     basic: {
-      title: "Basic widgets",
+      title: "A · Widget cơ bản",
+      defaultExpanded: true,
       components: ["Heading", "Text", "Image", "Button", "IconBox", "Spacer", "Divider"],
     },
+    layout: {
+      title: "B · Layout cơ bản",
+      defaultExpanded: false,
+      components: ["Container", "InnerContainer", "Columns", "Column"],
+    },
+    layoutPresets: {
+      title: "C · Layout có sẵn",
+      defaultExpanded: false,
+      components: [
+        "SplitMedia",
+        "SidebarLayout",
+        "AsymmetricGrid",
+        "CardGridLayout",
+        "BannerHero",
+        "NarrowCenter",
+        "StatsRow",
+        "LogoCloud",
+        "PricingLayout",
+        "ZigZag",
+        "StickyScroll",
+        "OverlayCard",
+        "BentoGrid",
+        "MagazineLayout",
+        "CtaBand",
+        "ProcessSteps",
+        "TimelineLayout",
+        "ContactSplit",
+        "FeatureRows",
+        "QuoteFeature",
+        "TwoColumnCompare",
+        "HeroCentered",
+        "MosaicFour",
+      ],
+    },
+    sections: {
+      title: "D · Slider / Gallery / FAQ cũ",
+      defaultExpanded: false,
+      components: ["Slider", "Gallery", "Accordion", "Testimonials", "Video"],
+    },
+    ...catalogCategoryMap,
     site: {
-      title: "Header / Footer",
+      title: "E · Site (Navbar / Footer)",
+      defaultExpanded: false,
       components: ["Navbar", "Footer"],
     },
-  },
+    other: {
+      title: "Khác",
+      visible: false,
+    },
+  } as unknown as Config<Props, RootProps>["categories"],
   components: {
     Container: {
       label: "Container",
       fields: containerFieldGroup,
       defaultProps: {
         ...containerDefaults,
-        layout: defaultLayout({
+        structure: {
+          ...defaultStructure(),
           tag: "section",
           contentWidth: "boxed",
           width: 1140,
+          display: "flex",
+          minHeight: 0,
+        },
+        flexGrid: {
+          ...defaultFlexGrid(),
           direction: "column",
           gap: 24,
-          minHeight: 0,
-        }),
-        padding: defaultSpacing(48, { left: 24, right: 24 }),
-        background: defaultBackground({ color: "#ffffff" }),
+          rowGap: 24,
+          columnGap: 24,
+        },
+        appearance: {
+          ...containerDefaults.appearance,
+          padding: defaultSpacing(48, { left: 24, right: 24 }),
+          background: defaultBackground({ color: "#ffffff" }),
+        },
       },
       render: renderContainer,
     },
@@ -407,16 +843,26 @@ export const config: Config<Props, RootProps> = {
       fields: containerFieldGroup,
       defaultProps: {
         ...containerDefaults,
-        layout: defaultLayout({
+        structure: {
+          ...defaultStructure(),
           tag: "div",
           contentWidth: "full",
+          display: "flex",
+        },
+        flexGrid: {
+          ...defaultFlexGrid(),
           direction: "row",
           gap: 24,
           alignItems: "stretch",
           flexWrap: "wrap",
-        }),
-        padding: defaultSpacing(16),
-        background: defaultBackground({ color: "transparent" }),
+          rowGap: 24,
+          columnGap: 24,
+        },
+        appearance: {
+          ...containerDefaults.appearance,
+          padding: defaultSpacing(16),
+          background: defaultBackground({ color: "transparent" }),
+        },
       },
       render: renderContainer,
     },
@@ -444,35 +890,23 @@ export const config: Config<Props, RootProps> = {
             { label: "Không", value: "no" },
           ],
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
-        background: {
-          type: "object",
-          label: "🎨 Background",
-          objectFields: backgroundFields,
-        },
         col1: { type: "slot", label: "Cột 1" },
         col2: { type: "slot", label: "Cột 2" },
         col3: { type: "slot", label: "Cột 3" },
         col4: { type: "slot", label: "Cột 4" },
         col5: { type: "slot", label: "Cột 5" },
         col6: { type: "slot", label: "Cột 6" },
+        ...columnsAppearanceFields,
       },
       defaultProps: {
         columns: "3",
         gap: 24,
         stackOnMobile: "yes",
-        padding: defaultSpacing(24),
-        margin: defaultSpacing(0),
-        background: defaultBackground({ color: "transparent" }),
+        appearance: {
+          padding: defaultSpacing(24),
+          margin: defaultSpacing(0),
+          background: defaultBackground({ color: "transparent" }),
+        },
         col1: [],
         col2: [],
         col3: [],
@@ -484,16 +918,15 @@ export const config: Config<Props, RootProps> = {
         columns,
         gap,
         stackOnMobile,
-        padding,
-        margin,
-        background,
         col1: Col1,
         col2: Col2,
         col3: Col3,
         col4: Col4,
         col5: Col5,
         col6: Col6,
+        ...rest
       }) => {
+        const { padding, margin, background } = resolveColumnsAppearance(rest);
         const count = columnCountMap[columns];
         const cols = [Col1, Col2, Col3, Col4, Col5, Col6].slice(0, count);
         const className = `puck-columns puck-columns-${count}${
@@ -578,53 +1011,24 @@ export const config: Config<Props, RootProps> = {
             { label: "Bottom", value: "flex-end" },
           ],
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
-        background: {
-          type: "object",
-          label: "🎨 Background",
-          objectFields: backgroundFields,
-        },
-        border: {
-          type: "object",
-          label: "⬜ Border",
-          objectFields: borderFields,
-        },
-        shadow: {
-          type: "object",
-          label: "🌑 Box Shadow",
-          objectFields: shadowFields,
-        },
         children: { type: "slot", label: "Widgets" },
+        ...columnAppearanceFields,
       },
       defaultProps: {
         width: 1,
         verticalAlign: "stretch",
-        padding: defaultSpacing(16),
-        margin: defaultSpacing(0),
-        background: defaultBackground({ color: "transparent" }),
-        border: defaultBorder(),
-        shadow: defaultShadow(),
+        appearance: {
+          padding: defaultSpacing(16),
+          margin: defaultSpacing(0),
+          background: defaultBackground({ color: "transparent" }),
+          border: defaultBorder(),
+          shadow: defaultShadow(),
+        },
         children: [],
       },
-      render: ({
-        width,
-        verticalAlign,
-        padding,
-        margin,
-        background,
-        border,
-        shadow,
-        children: Children,
-      }) => (
+      render: ({ width, verticalAlign, children: Children, ...rest }) => {
+        const { padding, margin, background, border, shadow } = resolveColumnAppearance(rest);
+        return (
         <div
           style={{
             flex: `${width} 1 0%`,
@@ -658,7 +1062,8 @@ export const config: Config<Props, RootProps> = {
             minEmptyHeight={80}
           />
         </div>
-      ),
+        );
+      },
     },
     Heading: {
       label: "Heading",
@@ -681,16 +1086,7 @@ export const config: Config<Props, RootProps> = {
           label: "🔤 Typography",
           objectFields: typographyFields,
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
+        ...widgetSpacingFields,
       },
       defaultProps: {
         text: "Add Your Heading Text Here",
@@ -701,10 +1097,14 @@ export const config: Config<Props, RootProps> = {
           lineHeight: 1.2,
           color: "#1c1917",
         }),
-        padding: defaultSpacing(0),
-        margin: defaultSpacing(0, { bottom: 12 }),
+        spacing: {
+          padding: defaultSpacing(0),
+          margin: defaultSpacing(0, { bottom: 12 }),
+        },
       },
-      render: ({ text, tag: Tag, typography, padding, margin }) => (
+      render: ({ text, tag: Tag, typography, ...rest }) => {
+        const { padding, margin } = resolveWidgetSpacing(rest);
+        return (
         <Tag
           style={{
             margin: 0,
@@ -715,7 +1115,8 @@ export const config: Config<Props, RootProps> = {
         >
           {text}
         </Tag>
-      ),
+        );
+      },
     },
     Text: {
       label: "Text Editor",
@@ -726,16 +1127,7 @@ export const config: Config<Props, RootProps> = {
           label: "🔤 Typography",
           objectFields: typographyFields,
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
+        ...widgetSpacingFields,
       },
       defaultProps: {
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.",
@@ -744,10 +1136,14 @@ export const config: Config<Props, RootProps> = {
           color: "#57534e",
           lineHeight: 1.7,
         }),
-        padding: defaultSpacing(0),
-        margin: defaultSpacing(0, { bottom: 12 }),
+        spacing: {
+          padding: defaultSpacing(0),
+          margin: defaultSpacing(0, { bottom: 12 }),
+        },
       },
-      render: ({ text, typography, padding, margin }) => (
+      render: ({ text, typography, ...rest }) => {
+        const { padding, margin } = resolveWidgetSpacing(rest);
+        return (
         <p
           style={{
             margin: 0,
@@ -759,12 +1155,13 @@ export const config: Config<Props, RootProps> = {
         >
           {text}
         </p>
-      ),
+        );
+      },
     },
     Image: {
       label: "Image",
       fields: {
-        src: { type: "text", label: "URL ảnh" },
+        src: imageField("Hình ảnh"),
         alt: { type: "text", label: "Alt" },
         width: { type: "number", label: "Width %", min: 10, max: 100 },
         align: {
@@ -806,16 +1203,7 @@ export const config: Config<Props, RootProps> = {
           label: "🌑 Shadow",
           objectFields: shadowFields,
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
+        ...widgetSpacingFields,
       },
       defaultProps: {
         src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
@@ -826,8 +1214,10 @@ export const config: Config<Props, RootProps> = {
         aspectRatio: "16/9",
         border: defaultBorder({ radius: 12 }),
         shadow: defaultShadow(),
-        padding: defaultSpacing(0),
-        margin: defaultSpacing(0, { bottom: 12 }),
+        spacing: {
+          padding: defaultSpacing(0),
+          margin: defaultSpacing(0, { bottom: 12 }),
+        },
       },
       render: ({
         src,
@@ -838,9 +1228,10 @@ export const config: Config<Props, RootProps> = {
         aspectRatio,
         border,
         shadow,
-        padding,
-        margin,
-      }) => (
+        ...rest
+      }) => {
+        const { padding, margin } = resolveWidgetSpacing(rest);
+        return (
         <div
           style={{
             display: "flex",
@@ -872,7 +1263,8 @@ export const config: Config<Props, RootProps> = {
             }}
           />
         </div>
-      ),
+        );
+      },
     },
     Button: {
       label: "Button",
@@ -917,16 +1309,7 @@ export const config: Config<Props, RootProps> = {
           label: "⬜ Border",
           objectFields: borderFields,
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
+        ...widgetSpacingFields,
       },
       defaultProps: {
         label: "Click here",
@@ -943,8 +1326,10 @@ export const config: Config<Props, RootProps> = {
         background: "#047857",
         hoverBackground: "#065f46",
         border: defaultBorder({ radius: 8 }),
-        padding: defaultSpacing(0),
-        margin: defaultSpacing(0, { bottom: 8 }),
+        spacing: {
+          padding: defaultSpacing(0),
+          margin: defaultSpacing(0, { bottom: 8 }),
+        },
       },
       render: ({
         label,
@@ -955,9 +1340,9 @@ export const config: Config<Props, RootProps> = {
         typography,
         background,
         border,
-        padding,
-        margin,
+        ...rest
       }) => {
+        const { padding, margin } = resolveWidgetSpacing(rest);
         const sizeStyle = buttonSizeMap[size];
         return (
           <div
@@ -1048,11 +1433,7 @@ export const config: Config<Props, RootProps> = {
             { label: "Dotted", value: "dotted" },
           ],
         },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
+        ...widgetMarginField,
       },
       defaultProps: {
         color: "#e7e5e4",
@@ -1060,9 +1441,13 @@ export const config: Config<Props, RootProps> = {
         width: 100,
         align: "center",
         style: "solid",
-        margin: defaultSpacing(16, { left: 0, right: 0 }),
+        spacing: {
+          margin: defaultSpacing(16, { left: 0, right: 0 }),
+        },
       },
-      render: ({ color, thickness, width, align, style, margin }) => (
+      render: ({ color, thickness, width, align, style, ...rest }) => {
+        const margin = rest.spacing?.margin || rest.margin || defaultSpacing(0);
+        return (
         <div
           style={{
             display: "flex",
@@ -1080,7 +1465,8 @@ export const config: Config<Props, RootProps> = {
             }}
           />
         </div>
-      ),
+        );
+      },
     },
     IconBox: {
       label: "Icon Box",
@@ -1108,21 +1494,6 @@ export const config: Config<Props, RootProps> = {
           label: "🔤 Description Typography",
           objectFields: typographyFields,
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
-        margin: {
-          type: "object",
-          label: "↔️ Margin",
-          objectFields: spacingFields,
-        },
-        background: {
-          type: "object",
-          label: "🎨 Background",
-          objectFields: backgroundFields,
-        },
         border: {
           type: "object",
           label: "⬜ Border",
@@ -1133,6 +1504,7 @@ export const config: Config<Props, RootProps> = {
           label: "🌑 Shadow",
           objectFields: shadowFields,
         },
+        ...iconBoxAppearanceFields,
       },
       defaultProps: {
         icon: "✦",
@@ -1150,9 +1522,11 @@ export const config: Config<Props, RootProps> = {
           fontSize: 14,
           color: "#57534e",
         }),
-        padding: defaultSpacing(24),
-        margin: defaultSpacing(0),
-        background: defaultBackground({ color: "#ffffff" }),
+        spacing: {
+          padding: defaultSpacing(24),
+          margin: defaultSpacing(0),
+          background: defaultBackground({ color: "#ffffff" }),
+        },
         border: defaultBorder({ width: 1, radius: 12, color: "#e7e5e4" }),
         shadow: defaultShadow(),
       },
@@ -1165,12 +1539,15 @@ export const config: Config<Props, RootProps> = {
         align,
         typographyTitle,
         typographyDesc,
-        padding,
-        margin,
-        background,
         border,
         shadow,
-      }) => (
+        ...rest
+      }) => {
+        const s = (rest.spacing || {}) as Partial<WidgetSpacing & { background?: BackgroundSettings }>;
+        const padding = s.padding || rest.padding || defaultSpacing(0);
+        const margin = s.margin || rest.margin || defaultSpacing(0);
+        const background = s.background || rest.background || defaultBackground();
+        return (
         <div
           style={{
             textAlign: align,
@@ -1210,12 +1587,23 @@ export const config: Config<Props, RootProps> = {
             {description}
           </p>
         </div>
-      ),
+        );
+      },
     },
     Navbar: {
       label: "Navbar",
       fields: {
-        brand: { type: "text", label: "Brand" },
+        brand: { type: "text", label: "Brand (để trống = Site settings)" },
+        logoUrl: imageField("Logo (khi không dùng Site settings)"),
+        logoHeight: { type: "number", label: "Chiều cao logo (px)", min: 16, max: 120 },
+        useSiteLogo: {
+          type: "radio",
+          label: "Logo từ Site settings",
+          options: [
+            { label: "Có", value: "yes" },
+            { label: "Không", value: "no" },
+          ],
+        },
         link1Label: { type: "text", label: "Link 1" },
         link1Href: { type: "text", label: "URL 1" },
         link2Label: { type: "text", label: "Link 2" },
@@ -1234,14 +1622,13 @@ export const config: Config<Props, RootProps> = {
             { label: "Có", value: "yes" },
           ],
         },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
+        ...widgetPaddingField,
       },
       defaultProps: {
-        brand: "Studio",
+        brand: "",
+        logoUrl: "",
+        logoHeight: 32,
+        useSiteLogo: "yes",
         link1Label: "Home",
         link1Href: "/",
         link2Label: "About",
@@ -1253,10 +1640,15 @@ export const config: Config<Props, RootProps> = {
         background: "#ffffff",
         textColor: "#1c1917",
         sticky: "yes",
-        padding: defaultSpacing(16, { left: 24, right: 24 }),
+        spacing: {
+          padding: defaultSpacing(16, { left: 24, right: 24 }),
+        },
       },
       render: ({
         brand,
+        logoUrl,
+        logoHeight = 32,
+        useSiteLogo = "yes",
         link1Label,
         link1Href,
         link2Label,
@@ -1268,8 +1660,15 @@ export const config: Config<Props, RootProps> = {
         background,
         textColor,
         sticky,
-        padding,
-      }) => (
+        ...rest
+      }) => {
+        const settings = useSiteSettings();
+        const resolvedBrand = brand || settings?.siteName || "Studio";
+        const resolvedLogo =
+          useSiteLogo === "yes" ? settings?.logoUrl || "" : logoUrl || "";
+        const ctaColor = settings?.primaryColor || "#047857";
+        const padding = rest.spacing?.padding || rest.padding || defaultSpacing(0);
+        return (
         <header
           style={{
             position: sticky === "yes" ? "sticky" : "relative",
@@ -1298,9 +1697,20 @@ export const config: Config<Props, RootProps> = {
                 textDecoration: "none",
                 fontWeight: 700,
                 fontSize: 18,
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              {brand}
+              {resolvedLogo ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={resolvedLogo}
+                  alt={resolvedBrand}
+                  style={{ height: logoHeight, width: "auto", display: "block" }}
+                />
+              ) : (
+                resolvedBrand
+              )}
             </a>
             <nav style={{ display: "flex", gap: 20, fontSize: 14 }}>
               <a href={link1Href} style={{ color: textColor, textDecoration: "none" }}>
@@ -1316,7 +1726,7 @@ export const config: Config<Props, RootProps> = {
             <a
               href={ctaHref}
               style={{
-                background: "#047857",
+                background: ctaColor,
                 color: "#fff",
                 textDecoration: "none",
                 padding: "8px 14px",
@@ -1329,7 +1739,8 @@ export const config: Config<Props, RootProps> = {
             </a>
           </div>
         </header>
-      ),
+        );
+      },
     },
     Footer: {
       label: "Footer",
@@ -1342,11 +1753,7 @@ export const config: Config<Props, RootProps> = {
         link2Href: { type: "text", label: "URL 2" },
         background: { type: "text", label: "Màu nền" },
         textColor: { type: "text", label: "Màu chữ" },
-        padding: {
-          type: "object",
-          label: "📦 Padding",
-          objectFields: spacingFields,
-        },
+        ...widgetPaddingField,
       },
       defaultProps: {
         brand: "Studio",
@@ -1357,7 +1764,9 @@ export const config: Config<Props, RootProps> = {
         link2Href: "/contact",
         background: "#0c0a09",
         textColor: "#a8a29e",
-        padding: defaultSpacing(48, { left: 24, right: 24 }),
+        spacing: {
+          padding: defaultSpacing(48, { left: 24, right: 24 }),
+        },
       },
       render: ({
         brand,
@@ -1368,8 +1777,12 @@ export const config: Config<Props, RootProps> = {
         link2Href,
         background,
         textColor,
-        padding,
-      }) => (
+        ...rest
+      }) => {
+        const settings = useSiteSettings();
+        const resolvedBrand = brand || settings?.siteName || "Studio";
+        const padding = rest.spacing?.padding || rest.padding || defaultSpacing(0);
+        return (
         <footer
           style={{
             background,
@@ -1388,7 +1801,7 @@ export const config: Config<Props, RootProps> = {
             }}
           >
             <div style={{ maxWidth: 420 }}>
-              <div style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>{brand}</div>
+              <div style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>{resolvedBrand}</div>
               <p style={{ marginTop: 12, lineHeight: 1.6 }}>{text}</p>
             </div>
             <div style={{ display: "flex", gap: 20, fontSize: 14 }}>
@@ -1401,13 +1814,38 @@ export const config: Config<Props, RootProps> = {
             </div>
           </div>
         </footer>
-      ),
+        );
+      },
     },
     Slider: advancedSectionComponents.Slider as never,
     Gallery: advancedSectionComponents.Gallery as never,
     Accordion: advancedSectionComponents.Accordion as never,
     Testimonials: advancedSectionComponents.Testimonials as never,
     Video: advancedSectionComponents.Video as never,
+    SplitMedia: layoutPresetComponents.SplitMedia as never,
+    SidebarLayout: layoutPresetComponents.SidebarLayout as never,
+    AsymmetricGrid: layoutPresetComponents.AsymmetricGrid as never,
+    CardGridLayout: layoutPresetComponents.CardGridLayout as never,
+    BannerHero: layoutPresetComponents.BannerHero as never,
+    NarrowCenter: layoutPresetComponents.NarrowCenter as never,
+    StatsRow: layoutPresetComponents.StatsRow as never,
+    LogoCloud: layoutPresetComponents.LogoCloud as never,
+    PricingLayout: layoutPresetComponents.PricingLayout as never,
+    ZigZag: layoutPresetComponents.ZigZag as never,
+    StickyScroll: layoutPresetComponents.StickyScroll as never,
+    OverlayCard: layoutPresetComponents.OverlayCard as never,
+    BentoGrid: layoutPresetComponents.BentoGrid as never,
+    MagazineLayout: layoutPresetComponents.MagazineLayout as never,
+    CtaBand: layoutPresetComponents.CtaBand as never,
+    ProcessSteps: layoutPresetComponents.ProcessSteps as never,
+    TimelineLayout: layoutPresetComponents.TimelineLayout as never,
+    ContactSplit: layoutPresetComponents.ContactSplit as never,
+    FeatureRows: layoutPresetComponents.FeatureRows as never,
+    QuoteFeature: layoutPresetComponents.QuoteFeature as never,
+    TwoColumnCompare: layoutPresetComponents.TwoColumnCompare as never,
+    HeroCentered: layoutPresetComponents.HeroCentered as never,
+    MosaicFour: layoutPresetComponents.MosaicFour as never,
+    ...(catalogSectionComponents as unknown as Record<string, never>),
   },
 };
 

@@ -1,7 +1,7 @@
 import "@puckeditor/core/puck.css";
 import type { Metadata } from "next";
-import { Client } from "./client";
-import { getPage } from "@/lib/pages";
+import { BuilderEditor } from "@/components/builder/BuilderEditor";
+import { emptyPage, getPage } from "@/lib/pages";
 
 export async function generateMetadata({
   params,
@@ -10,10 +10,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { puckPath = [] } = await params;
   const path = puckPath.length ? `/${puckPath.join("/")}` : "/";
-
-  return {
-    title: `Editor: ${path}`,
-  };
+  return { title: `Sửa Body: ${path}` };
 }
 
 export default async function EditorPage({
@@ -23,20 +20,15 @@ export default async function EditorPage({
 }) {
   const { puckPath = [] } = await params;
   const path = puckPath.length ? `/${puckPath.join("/")}` : "/";
-  const data = getPage(path) || {
-    root: {
-      props: {
-        title: path === "/" ? "Trang chủ" : path,
-        pageBackground: "#fafaf9",
-        contentMaxWidth: 1140,
-        header: [],
-        footer: [],
-      },
-    },
-    content: [],
-  };
 
-  return <Client path={path} data={data} />;
+  // Reserved — header/footer có route riêng
+  if (path === "/header" || path === "/footer") {
+    return null;
+  }
+
+  const data = getPage(path) || emptyPage(path === "/" ? "Trang chủ" : path);
+
+  return <BuilderEditor kind="page" path={path} data={data} />;
 }
 
 export const dynamic = "force-dynamic";

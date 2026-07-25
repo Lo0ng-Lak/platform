@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PageRender } from "./client";
-import { getPage } from "@/lib/pages";
+import { SiteChrome } from "@/components/builder/SiteChrome";
+import { getFooter, getHeader, getPage, getSettings } from "@/lib/pages";
 
 export async function generateMetadata({
   params,
@@ -11,9 +11,12 @@ export async function generateMetadata({
   const { puckPath = [] } = await params;
   const path = `/${puckPath.join("/")}`;
   const page = getPage(path);
+  const settings = getSettings();
 
   return {
     title: (page?.root?.props?.title as string | undefined) || path,
+    description: settings.tagline || undefined,
+    icons: settings.faviconUrl ? [{ url: settings.faviconUrl }] : undefined,
   };
 }
 
@@ -25,15 +28,27 @@ export default async function PublicPage({
   const { puckPath = [] } = await params;
   const path = `/${puckPath.join("/")}`;
 
-  // Reserved app routes
-  if (puckPath[0] === "dashboard" || puckPath[0] === "api" || puckPath[0] === "puck") {
+  if (
+    puckPath[0] === "dashboard" ||
+    puckPath[0] === "api" ||
+    puckPath[0] === "puck" ||
+    puckPath[0] === "edit" ||
+    puckPath[0] === "admin"
+  ) {
     notFound();
   }
 
-  const data = getPage(path);
-  if (!data) notFound();
+  const page = getPage(path);
+  if (!page) notFound();
 
-  return <PageRender data={data} />;
+  return (
+    <SiteChrome
+      header={getHeader()}
+      footer={getFooter()}
+      page={page}
+      settings={getSettings()}
+    />
+  );
 }
 
 export const dynamic = "force-dynamic";

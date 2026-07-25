@@ -4,9 +4,18 @@ import {
   deletePage,
   listPages,
   normalizePath,
+  renamePage,
+  saveFooter,
+  saveHeader,
   savePage,
 } from "@/lib/pages";
-import { homepageTemplate } from "@/lib/templates";
+import {
+  contactTemplate,
+  footerTemplate,
+  headerTemplate,
+  homepageTemplate,
+  servicesTemplate,
+} from "@/lib/templates";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
@@ -18,15 +27,30 @@ export async function POST(request: Request) {
     path?: string;
     title?: string;
     seedHome?: boolean;
+    seedDemoSite?: boolean;
+    renameFrom?: string;
+    renameTo?: string;
   };
 
   try {
-    if (body.seedHome) {
+    if (body.seedHome || body.seedDemoSite) {
+      saveHeader(headerTemplate);
+      saveFooter(footerTemplate);
       savePage("/", homepageTemplate, "Trang chủ");
-      revalidatePath("/");
+      savePage("/services", servicesTemplate, "Dịch vụ");
+      savePage("/contact", contactTemplate, "Liên hệ");
+      revalidatePath("/", "layout");
       return NextResponse.json({
-        page: { path: "/", title: "Trang chủ", updatedAt: new Date().toISOString() },
+        ok: true,
+        pages: listPages(),
       });
+    }
+
+    if (body.renameFrom && body.renameTo) {
+      const page = renamePage(body.renameFrom, body.renameTo, body.title);
+      revalidatePath(body.renameFrom);
+      revalidatePath(body.renameTo);
+      return NextResponse.json({ page });
     }
 
     const pagePath = normalizePath(body.path || "");

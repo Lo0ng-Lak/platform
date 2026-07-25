@@ -1,4 +1,7 @@
+"use client";
+
 import { AccordionSection } from "@/components/builder/AccordionSection";
+import { imageField } from "@/components/builder/ImageField";
 import { SliderSection } from "@/components/builder/SliderSection";
 import { TestimonialsSection } from "@/components/builder/TestimonialsSection";
 import {
@@ -7,6 +10,37 @@ import {
   spacingToCss,
   type SpacingBox,
 } from "@/lib/builder-styles";
+
+const widgetSpacingFields = {
+  spacing: {
+    type: "object" as const,
+    label: "⚙️ Spacing",
+    objectFields: {
+      padding: {
+        type: "object" as const,
+        label: "Padding",
+        objectFields: spacingFields,
+      },
+      margin: {
+        type: "object" as const,
+        label: "Margin",
+        objectFields: spacingFields,
+      },
+    },
+  },
+};
+
+function resolveWidgetSpacing(props: {
+  spacing?: Partial<{ padding: SpacingBox; margin: SpacingBox }>;
+  padding?: SpacingBox;
+  margin?: SpacingBox;
+}) {
+  const s = props.spacing || {};
+  return {
+    padding: s.padding || props.padding || defaultSpacing(0),
+    margin: s.margin || props.margin || defaultSpacing(0),
+  };
+}
 
 const defaultSlide = {
   image:
@@ -36,7 +70,7 @@ export const advancedSectionComponents = {
           item.title || `Slide ${(i ?? 0) + 1}`,
         defaultItemProps: defaultSlide,
         arrayFields: {
-          image: { type: "text" as const, label: "URL hình" },
+          image: imageField("Hình slide"),
           title: { type: "text" as const, label: "Tiêu đề" },
           subtitle: { type: "textarea" as const, label: "Mô tả" },
           buttonLabel: { type: "text" as const, label: "Nút CTA" },
@@ -151,16 +185,7 @@ export const advancedSectionComponents = {
           { label: "Không", value: "no" },
         ],
       },
-      padding: {
-        type: "object" as const,
-        label: "📦 Padding",
-        objectFields: spacingFields,
-      },
-      margin: {
-        type: "object" as const,
-        label: "↔️ Margin",
-        objectFields: spacingFields,
-      },
+      ...widgetSpacingFields,
     },
     defaultProps: {
       slides: [
@@ -192,8 +217,10 @@ export const advancedSectionComponents = {
       showArrows: "yes" as const,
       showDots: "yes" as const,
       pauseOnHover: "yes" as const,
-      padding: defaultSpacing(0),
-      margin: defaultSpacing(0),
+      spacing: {
+        padding: defaultSpacing(0),
+        margin: defaultSpacing(0),
+      },
     },
     render: ({
       slides,
@@ -207,8 +234,7 @@ export const advancedSectionComponents = {
       showArrows,
       showDots,
       pauseOnHover,
-      padding,
-      margin,
+      ...rest
     }: {
       slides: typeof defaultSlide[];
       height: number;
@@ -221,9 +247,9 @@ export const advancedSectionComponents = {
       showArrows: "yes" | "no";
       showDots: "yes" | "no";
       pauseOnHover: "yes" | "no";
-      padding: SpacingBox;
-      margin: SpacingBox;
-    }) => (
+    }) => {
+      const { padding, margin } = resolveWidgetSpacing(rest);
+      return (
       <div
         style={{
           ...spacingToCss(padding, "padding"),
@@ -244,7 +270,8 @@ export const advancedSectionComponents = {
           pauseOnHover={pauseOnHover}
         />
       </div>
-    ),
+      );
+    },
   },
 
   Gallery: {
@@ -260,7 +287,7 @@ export const advancedSectionComponents = {
           alt: "Gallery image",
         },
         arrayFields: {
-          src: { type: "text" as const, label: "URL" },
+          src: imageField("Ảnh"),
           alt: { type: "text" as const, label: "Alt" },
         },
       },
@@ -285,16 +312,7 @@ export const advancedSectionComponents = {
           { label: "Auto", value: "auto" },
         ],
       },
-      padding: {
-        type: "object" as const,
-        label: "📦 Padding",
-        objectFields: spacingFields,
-      },
-      margin: {
-        type: "object" as const,
-        label: "↔️ Margin",
-        objectFields: spacingFields,
-      },
+      ...widgetSpacingFields,
     },
     defaultProps: {
       images: [
@@ -315,8 +333,10 @@ export const advancedSectionComponents = {
       gap: 16,
       radius: 12,
       aspectRatio: "4/3" as const,
-      padding: defaultSpacing(24),
-      margin: defaultSpacing(0),
+      spacing: {
+        padding: defaultSpacing(24),
+        margin: defaultSpacing(0),
+      },
     },
     render: ({
       images,
@@ -324,17 +344,16 @@ export const advancedSectionComponents = {
       gap,
       radius,
       aspectRatio,
-      padding,
-      margin,
+      ...rest
     }: {
       images: { src: string; alt: string }[];
       columns: "2" | "3" | "4";
       gap: number;
       radius: number;
       aspectRatio: string;
-      padding: SpacingBox;
-      margin: SpacingBox;
-    }) => (
+    }) => {
+      const { padding, margin } = resolveWidgetSpacing(rest);
+      return (
       <div
         style={{
           display: "grid",
@@ -361,7 +380,8 @@ export const advancedSectionComponents = {
           />
         ))}
       </div>
-    ),
+      );
+    },
   },
 
   Accordion: {
@@ -397,16 +417,7 @@ export const advancedSectionComponents = {
       titleSize: { type: "number" as const, label: "Cỡ tiêu đề", min: 12 },
       contentSize: { type: "number" as const, label: "Cỡ nội dung", min: 12 },
       radius: { type: "number" as const, label: "Bo góc", min: 0 },
-      padding: {
-        type: "object" as const,
-        label: "📦 Padding",
-        objectFields: spacingFields,
-      },
-      margin: {
-        type: "object" as const,
-        label: "↔️ Margin",
-        objectFields: spacingFields,
-      },
+      ...widgetSpacingFields,
     },
     defaultProps: {
       items: [
@@ -430,8 +441,10 @@ export const advancedSectionComponents = {
       titleSize: 16,
       contentSize: 14,
       radius: 10,
-      padding: defaultSpacing(24),
-      margin: defaultSpacing(0),
+      spacing: {
+        padding: defaultSpacing(24),
+        margin: defaultSpacing(0),
+      },
     },
     render: (props: {
       items: { title: string; content: string }[];
@@ -444,18 +457,22 @@ export const advancedSectionComponents = {
       titleSize: number;
       contentSize: number;
       radius: number;
-      padding: SpacingBox;
-      margin: SpacingBox;
-    }) => (
+      spacing?: Partial<{ padding: SpacingBox; margin: SpacingBox }>;
+      padding?: SpacingBox;
+      margin?: SpacingBox;
+    }) => {
+      const { padding, margin } = resolveWidgetSpacing(props);
+      return (
       <div
         style={{
-          ...spacingToCss(props.padding, "padding"),
-          ...spacingToCss(props.margin, "margin"),
+          ...spacingToCss(padding, "padding"),
+          ...spacingToCss(margin, "margin"),
         }}
       >
         <AccordionSection {...props} />
       </div>
-    ),
+      );
+    },
   },
 
   Testimonials: {
@@ -476,7 +493,7 @@ export const advancedSectionComponents = {
           quote: { type: "textarea" as const, label: "Nội dung" },
           name: { type: "text" as const, label: "Tên" },
           role: { type: "text" as const, label: "Chức danh" },
-          avatar: { type: "text" as const, label: "URL avatar" },
+          avatar: imageField("Avatar"),
         },
       },
       autoplay: {
@@ -501,16 +518,7 @@ export const advancedSectionComponents = {
           { label: "Giữa", value: "center" },
         ],
       },
-      padding: {
-        type: "object" as const,
-        label: "📦 Padding",
-        objectFields: spacingFields,
-      },
-      margin: {
-        type: "object" as const,
-        label: "↔️ Margin",
-        objectFields: spacingFields,
-      },
+      ...widgetSpacingFields,
     },
     defaultProps: {
       items: [
@@ -535,8 +543,10 @@ export const advancedSectionComponents = {
       roleColor: "#78716c",
       quoteSize: 18,
       align: "center" as const,
-      padding: defaultSpacing(24),
-      margin: defaultSpacing(0),
+      spacing: {
+        padding: defaultSpacing(24),
+        margin: defaultSpacing(0),
+      },
     },
     render: (props: {
       items: {
@@ -553,25 +563,29 @@ export const advancedSectionComponents = {
       roleColor: string;
       quoteSize: number;
       align: "left" | "center";
-      padding: SpacingBox;
-      margin: SpacingBox;
-    }) => (
+      spacing?: Partial<{ padding: SpacingBox; margin: SpacingBox }>;
+      padding?: SpacingBox;
+      margin?: SpacingBox;
+    }) => {
+      const { padding, margin } = resolveWidgetSpacing(props);
+      return (
       <div
         style={{
-          ...spacingToCss(props.padding, "padding"),
-          ...spacingToCss(props.margin, "margin"),
+          ...spacingToCss(padding, "padding"),
+          ...spacingToCss(margin, "margin"),
         }}
       >
         <TestimonialsSection {...props} />
       </div>
-    ),
+      );
+    },
   },
 
   Video: {
     label: "Video",
     fields: {
       src: { type: "text" as const, label: "YouTube / Vimeo / MP4 URL" },
-      poster: { type: "text" as const, label: "Poster image URL" },
+      poster: imageField("Poster (tuỳ chọn)"),
       aspectRatio: {
         type: "select" as const,
         label: "Tỷ lệ",
@@ -608,16 +622,7 @@ export const advancedSectionComponents = {
         ],
       },
       width: { type: "number" as const, label: "Width %", min: 30, max: 100 },
-      padding: {
-        type: "object" as const,
-        label: "📦 Padding",
-        objectFields: spacingFields,
-      },
-      margin: {
-        type: "object" as const,
-        label: "↔️ Margin",
-        objectFields: spacingFields,
-      },
+      ...widgetSpacingFields,
     },
     defaultProps: {
       src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
@@ -628,8 +633,10 @@ export const advancedSectionComponents = {
       radius: 12,
       align: "center" as const,
       width: 100,
-      padding: defaultSpacing(24),
-      margin: defaultSpacing(0),
+      spacing: {
+        padding: defaultSpacing(24),
+        margin: defaultSpacing(0),
+      },
     },
     render: ({
       src,
@@ -640,8 +647,7 @@ export const advancedSectionComponents = {
       radius,
       align,
       width,
-      padding,
-      margin,
+      ...rest
     }: {
       src: string;
       poster: string;
@@ -651,9 +657,8 @@ export const advancedSectionComponents = {
       radius: number;
       align: "left" | "center" | "right";
       width: number;
-      padding: SpacingBox;
-      margin: SpacingBox;
     }) => {
+      const { padding, margin } = resolveWidgetSpacing(rest);
       const isEmbed =
         src.includes("youtube.com") ||
         src.includes("youtu.be") ||

@@ -1,50 +1,57 @@
 import type { Data } from "@puckeditor/core";
 
-/** Template trang chủ công khai — không có link admin/editor */
+export const headerTemplate: Data = {
+  root: { props: { title: "Header" } },
+  content: [
+    {
+      type: "Navbar",
+      props: {
+        id: "Navbar-1",
+        brand: "Studio",
+        link1Label: "Trang chủ",
+        link1Href: "/",
+        link2Label: "Dịch vụ",
+        link2Href: "/services",
+        link3Label: "Liên hệ",
+        link3Href: "/contact",
+        ctaLabel: "Liên hệ ngay",
+        ctaHref: "/contact",
+        background: "#ffffff",
+        textColor: "#1c1917",
+        sticky: "yes",
+        padding: { top: 16, right: 24, bottom: 16, left: 24 },
+      },
+    },
+  ],
+};
+
+export const footerTemplate: Data = {
+  root: { props: { title: "Footer" } },
+  content: [
+    {
+      type: "Footer",
+      props: {
+        id: "Footer-1",
+        brand: "Studio",
+        text: "Thiết kế không gian làm việc hiện đại cho đội ngũ sáng tạo.",
+        link1Label: "Điều khoản",
+        link1Href: "/terms",
+        link2Label: "Liên hệ",
+        link2Href: "/contact",
+        background: "#0c0a09",
+        textColor: "#a8a29e",
+        padding: { top: 48, right: 24, bottom: 48, left: 24 },
+      },
+    },
+  ],
+};
+
+/** Body trang chủ — không gồm header/footer */
 export const homepageTemplate = {
   root: {
     props: {
       title: "Trang chủ",
-      pageBackground: "#fafaf9",
-      contentMaxWidth: 1140,
-      header: [
-        {
-          type: "Navbar",
-          props: {
-            id: "Navbar-1",
-            brand: "Studio",
-            link1Label: "Trang chủ",
-            link1Href: "/",
-            link2Label: "Dịch vụ",
-            link2Href: "/services",
-            link3Label: "Liên hệ",
-            link3Href: "/contact",
-            ctaLabel: "Liên hệ ngay",
-            ctaHref: "/contact",
-            background: "#ffffff",
-            textColor: "#1c1917",
-            sticky: "yes",
-            padding: { top: 16, right: 24, bottom: 16, left: 24 },
-          },
-        },
-      ],
-      footer: [
-        {
-          type: "Footer",
-          props: {
-            id: "Footer-1",
-            brand: "Studio",
-            text: "Thiết kế không gian làm việc hiện đại cho đội ngũ sáng tạo.",
-            link1Label: "Điều khoản",
-            link1Href: "/terms",
-            link2Label: "Liên hệ",
-            link2Href: "/contact",
-            background: "#0c0a09",
-            textColor: "#a8a29e",
-            padding: { top: 48, right: 24, bottom: 48, left: 24 },
-          },
-        },
-      ],
+      pageBackground: "#ffffff",
     },
   },
   content: [
@@ -57,7 +64,8 @@ export const homepageTemplate = {
             image:
               "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
             title: "Không gian làm việc hiện đại",
-            subtitle: "Thiết kế nội thất văn phòng tối giản, tối ưu ánh sáng và trải nghiệm.",
+            subtitle:
+              "Thiết kế nội thất văn phòng tối giản, tối ưu ánh sáng và trải nghiệm.",
             buttonLabel: "Khám phá dịch vụ",
             buttonHref: "/services",
             textAlign: "center",
@@ -104,17 +112,49 @@ export const homepageTemplate = {
       type: "Container",
       props: {
         id: "Container-features",
-        layout: {
+        structure: {
           tag: "section",
+          display: "flex",
           contentWidth: "boxed",
           width: 1140,
+          customWidth: 1140,
+          customWidthUnit: "px",
+          containerAlign: "center",
+          heightMode: "auto",
+          height: 400,
           minHeight: 0,
+          maxHeight: 0,
+        },
+        flexGrid: {
           direction: "column",
           justifyContent: "flex-start",
           alignItems: "stretch",
+          alignContent: "stretch",
           flexWrap: "nowrap",
           gap: 24,
+          rowGap: 24,
+          columnGap: 24,
+          gridColumns: 3,
+          gridRows: 1,
+          gridAutoFlow: "row",
+        },
+        position: {
+          position: "relative",
+          zIndex: 0,
+          offsetTop: 0,
+          offsetRight: 0,
+          offsetBottom: 0,
+          offsetLeft: 0,
+          stickyOffset: 0,
+        },
+        advanced: {
           overflow: "visible",
+          overflowX: "visible",
+          overflowY: "visible",
+          opacity: 100,
+          hideDesktop: "no",
+          hideTablet: "no",
+          hideMobile: "no",
         },
         padding: { top: 64, right: 24, bottom: 32, left: 24 },
         margin: { top: 0, right: 0, bottom: 0, left: 0 },
@@ -125,11 +165,28 @@ export const homepageTemplate = {
           imagePosition: "center center",
           imageSize: "cover",
           imageRepeat: "no-repeat",
+          imageAttachment: "scroll",
           gradient: "linear-gradient(135deg, #ecfdf5 0%, #fafaf9 100%)",
           overlayColor: "#000000",
           overlayOpacity: 0,
+          overlayBlend: "normal",
         },
-        border: { width: 0, style: "solid", color: "#e7e5e4", radius: 0 },
+        border: {
+          width: 0,
+          widthTop: 0,
+          widthRight: 0,
+          widthBottom: 0,
+          widthLeft: 0,
+          linked: "yes",
+          style: "solid",
+          color: "#e7e5e4",
+          radius: 0,
+          radiusTopLeft: 0,
+          radiusTopRight: 0,
+          radiusBottomRight: 0,
+          radiusBottomLeft: 0,
+          radiusLinked: "yes",
+        },
         shadow: {
           enabled: "no",
           x: 0,
@@ -137,6 +194,7 @@ export const homepageTemplate = {
           blur: 24,
           spread: 0,
           color: "rgba(0,0,0,0.12)",
+          inset: "no",
         },
         children: [
           {
@@ -153,6 +211,8 @@ export const homepageTemplate = {
                 textAlign: "center",
                 color: "#1c1917",
                 textTransform: "none",
+                fontStyle: "normal",
+                textDecoration: "none",
               },
               padding: { top: 0, right: 0, bottom: 0, left: 0 },
               margin: { top: 0, right: 0, bottom: 8, left: 0 },
@@ -171,6 +231,8 @@ export const homepageTemplate = {
                 textAlign: "center",
                 color: "#57534e",
                 textTransform: "none",
+                fontStyle: "normal",
+                textDecoration: "none",
               },
               padding: { top: 0, right: 0, bottom: 0, left: 0 },
               margin: { top: 0, right: 0, bottom: 12, left: 0 },
@@ -179,120 +241,108 @@ export const homepageTemplate = {
         ],
       },
     },
+  ],
+} as Data;
+
+export const servicesTemplate = {
+  root: {
+    props: {
+      title: "Dịch vụ",
+      pageBackground: "#ffffff",
+    },
+  },
+  content: [
     {
-      type: "Gallery",
+      type: "Heading",
       props: {
-        id: "Gallery-1",
-        images: [
-          {
-            src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-            alt: "Văn phòng",
-          },
-          {
-            src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-            alt: "Không gian làm việc",
-          },
-          {
-            src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-            alt: "Đội ngũ",
-          },
-        ],
-        columns: "3",
-        gap: 16,
-        radius: 12,
-        aspectRatio: "4/3",
-        padding: { top: 8, right: 24, bottom: 24, left: 24 },
+        id: "Heading-services",
+        text: "Dịch vụ",
+        tag: "h1",
+        typography: {
+          fontSize: 42,
+          fontWeight: "700",
+          lineHeight: 1.2,
+          letterSpacing: 0,
+          textAlign: "left",
+          color: "#1c1917",
+          textTransform: "none",
+          fontStyle: "normal",
+          textDecoration: "none",
+        },
+        padding: { top: 64, right: 24, bottom: 12, left: 24 },
         margin: { top: 0, right: 0, bottom: 0, left: 0 },
       },
     },
     {
-      type: "Container",
+      type: "Text",
       props: {
-        id: "Container-faq",
-        layout: {
-          tag: "section",
-          contentWidth: "boxed",
-          width: 800,
-          minHeight: 0,
-          direction: "column",
-          justifyContent: "flex-start",
-          alignItems: "stretch",
-          flexWrap: "nowrap",
-          gap: 16,
-          overflow: "visible",
+        id: "Text-services",
+        text: "Thiết kế nội thất, cải tạo văn phòng và tư vấn không gian làm việc.",
+        typography: {
+          fontSize: 17,
+          fontWeight: "400",
+          lineHeight: 1.7,
+          letterSpacing: 0,
+          textAlign: "left",
+          color: "#57534e",
+          textTransform: "none",
+          fontStyle: "normal",
+          textDecoration: "none",
         },
-        padding: { top: 32, right: 24, bottom: 64, left: 24 },
+        padding: { top: 0, right: 24, bottom: 64, left: 24 },
         margin: { top: 0, right: 0, bottom: 0, left: 0 },
-        background: {
-          type: "color",
-          color: "#fafaf9",
-          imageUrl: "",
-          imagePosition: "center center",
-          imageSize: "cover",
-          imageRepeat: "no-repeat",
-          gradient: "linear-gradient(135deg, #ecfdf5 0%, #fafaf9 100%)",
-          overlayColor: "#000000",
-          overlayOpacity: 0,
+      },
+    },
+  ],
+} as Data;
+
+export const contactTemplate = {
+  root: {
+    props: {
+      title: "Liên hệ",
+      pageBackground: "#fafaf9",
+    },
+  },
+  content: [
+    {
+      type: "Heading",
+      props: {
+        id: "Heading-contact",
+        text: "Liên hệ",
+        tag: "h1",
+        typography: {
+          fontSize: 42,
+          fontWeight: "700",
+          lineHeight: 1.2,
+          letterSpacing: 0,
+          textAlign: "left",
+          color: "#1c1917",
+          textTransform: "none",
+          fontStyle: "normal",
+          textDecoration: "none",
         },
-        border: { width: 0, style: "solid", color: "#e7e5e4", radius: 0 },
-        shadow: {
-          enabled: "no",
-          x: 0,
-          y: 8,
-          blur: 24,
-          spread: 0,
-          color: "rgba(0,0,0,0.12)",
+        padding: { top: 64, right: 24, bottom: 12, left: 24 },
+        margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      },
+    },
+    {
+      type: "Text",
+      props: {
+        id: "Text-contact",
+        text: "Email: hello@studio.example — Hotline: 0123 456 789",
+        typography: {
+          fontSize: 17,
+          fontWeight: "400",
+          lineHeight: 1.7,
+          letterSpacing: 0,
+          textAlign: "left",
+          color: "#57534e",
+          textTransform: "none",
+          fontStyle: "normal",
+          textDecoration: "none",
         },
-        children: [
-          {
-            type: "Heading",
-            props: {
-              id: "Heading-faq",
-              text: "Câu hỏi thường gặp",
-              tag: "h2",
-              typography: {
-                fontSize: 32,
-                fontWeight: "700",
-                lineHeight: 1.2,
-                letterSpacing: 0,
-                textAlign: "left",
-                color: "#1c1917",
-                textTransform: "none",
-              },
-              padding: { top: 0, right: 0, bottom: 0, left: 0 },
-              margin: { top: 0, right: 0, bottom: 8, left: 0 },
-            },
-          },
-          {
-            type: "Accordion",
-            props: {
-              id: "Accordion-1",
-              items: [
-                {
-                  title: "Thời gian hoàn thiện một dự án?",
-                  content:
-                    "Tùy quy mô. Dự án văn phòng vừa thường mất 4–8 tuần từ thiết kế đến bàn giao.",
-                },
-                {
-                  title: "Có hỗ trợ khảo sát tận nơi không?",
-                  content:
-                    "Có. Đội ngũ sẽ đến khảo sát hiện trạng và tư vấn phương án phù hợp ngân sách.",
-                },
-              ],
-              allowMultiple: "no",
-              titleColor: "#1c1917",
-              contentColor: "#57534e",
-              borderColor: "#e7e5e4",
-              background: "#ffffff",
-              activeBackground: "#f5f5f4",
-              titleSize: 16,
-              contentSize: 14,
-              radius: 10,
-              padding: { top: 0, right: 0, bottom: 0, left: 0 },
-              margin: { top: 0, right: 0, bottom: 0, left: 0 },
-            },
-          },
-        ],
+        padding: { top: 0, right: 24, bottom: 64, left: 24 },
+        margin: { top: 0, right: 0, bottom: 0, left: 0 },
       },
     },
   ],

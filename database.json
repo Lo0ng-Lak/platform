@@ -1,113 +1,108 @@
 {
+  "header": {
+    "root": {
+      "props": {
+        "title": "Header"
+      }
+    },
+    "content": [
+      {
+        "type": "Navbar",
+        "props": {
+          "id": "Navbar-1",
+          "brand": "Studio",
+          "link1Label": "Trang chủ",
+          "link1Href": "/",
+          "link2Label": "About Us",
+          "link2Href": "/about-us",
+          "link3Label": "Liên hệ",
+          "link3Href": "/contact",
+          "ctaLabel": "Liên hệ ngay",
+          "ctaHref": "/contact",
+          "background": "#ffffff",
+          "textColor": "#1c1917",
+          "sticky": "yes",
+          "padding": {
+            "top": 16,
+            "right": 24,
+            "bottom": 16,
+            "left": 24
+          }
+        }
+      }
+    ],
+    "zones": {}
+  },
+  "footer": {
+    "root": {
+      "props": {
+        "title": "Footer"
+      }
+    },
+    "content": [
+      {
+        "type": "Footer",
+        "props": {
+          "id": "Footer-1",
+          "brand": "Studio",
+          "text": "Thiết kế không gian làm việc hiện đại cho đội ngũ sáng tạo.",
+          "link1Label": "Điều khoản",
+          "link1Href": "/terms",
+          "link2Label": "Liên hệ",
+          "link2Href": "/contact",
+          "background": "#0c0a09",
+          "textColor": "#a8a29e",
+          "padding": {
+            "top": 48,
+            "right": 24,
+            "bottom": 48,
+            "left": 24
+          }
+        }
+      }
+    ]
+  },
   "pages": {
     "/": {
       "root": {
         "props": {
           "title": "Trang chủ",
-          "pageBackground": "#fafaf9",
-          "contentMaxWidth": 1140,
-          "header": [
-            {
-              "type": "Navbar",
-              "props": {
-                "id": "Navbar-1",
-                "brand": "Studio",
-                "link1Label": "Trang chủ",
-                "link1Href": "/",
-                "link2Label": "Dịch vụ",
-                "link2Href": "/services",
-                "link3Label": "Liên hệ",
-                "link3Href": "/contact",
-                "ctaLabel": "Liên hệ ngay",
-                "ctaHref": "/contact",
-                "background": "#ffffff",
-                "textColor": "#1c1917",
-                "sticky": "yes",
-                "padding": {
-                  "top": 16,
-                  "right": 24,
-                  "bottom": 16,
-                  "left": 24
-                }
-              }
-            }
-          ],
-          "footer": [
-            {
-              "type": "Footer",
-              "props": {
-                "id": "Footer-1",
-                "brand": "Studio",
-                "text": "Thiết kế không gian làm việc hiện đại cho đội ngũ sáng tạo.",
-                "link1Label": "Điều khoản",
-                "link1Href": "/terms",
-                "link2Label": "Liên hệ",
-                "link2Href": "/contact",
-                "background": "#0c0a09",
-                "textColor": "#a8a29e",
-                "padding": {
-                  "top": 48,
-                  "right": 24,
-                  "bottom": 48,
-                  "left": 24
-                }
-              }
-            }
-          ]
+          "pageBackground": "#ffffff"
+        }
+      },
+      "content": [],
+      "zones": {}
+    },
+    "/contact": {
+      "root": {
+        "props": {
+          "title": "Liên hệ",
+          "pageBackground": "#fafaf9"
         }
       },
       "content": [
         {
-          "type": "Slider",
+          "type": "Heading",
           "props": {
-            "id": "Slider-1",
-            "slides": [
-              {
-                "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
-                "title": "Không gian làm việc hiện đại",
-                "subtitle": "Thiết kế nội thất văn phòng tối giản, tối ưu ánh sáng và trải nghiệm.",
-                "buttonLabel": "Khám phá dịch vụ",
-                "buttonHref": "/services",
-                "textAlign": "center",
-                "contentVertical": "center",
-                "overlayColor": "#000000",
-                "overlayOpacity": 45,
-                "titleColor": "#ffffff",
-                "subtitleColor": "#f5f5f4",
-                "titleSize": 52,
-                "subtitleSize": 18
-              },
-              {
-                "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80",
-                "title": "Tối ưu cho đội ngũ sáng tạo",
-                "subtitle": "Từ concept đến thi công — đồng bộ thương hiệu và không gian.",
-                "buttonLabel": "Liên hệ tư vấn",
-                "buttonHref": "/contact",
-                "textAlign": "left",
-                "contentVertical": "center",
-                "overlayColor": "#022c22",
-                "overlayOpacity": 50,
-                "titleColor": "#ecfdf5",
-                "subtitleColor": "#a7f3d0",
-                "titleSize": 48,
-                "subtitleSize": 17
-              }
-            ],
-            "height": 520,
-            "autoplay": "yes",
-            "interval": 4500,
-            "loop": "yes",
-            "transition": "fade",
-            "transitionMs": 700,
-            "textAnimation": "fadeUp",
-            "showArrows": "yes",
-            "showDots": "yes",
-            "pauseOnHover": "yes",
+            "id": "Heading-contact",
+            "text": "Liên hệ",
+            "tag": "h1",
+            "typography": {
+              "fontSize": 42,
+              "fontWeight": "700",
+              "lineHeight": 1.2,
+              "letterSpacing": 0,
+              "textAlign": "left",
+              "color": "#1c1917",
+              "textTransform": "none",
+              "fontStyle": "normal",
+              "textDecoration": "none"
+            },
             "padding": {
-              "top": 0,
-              "right": 0,
-              "bottom": 0,
-              "left": 0
+              "top": 64,
+              "right": 24,
+              "bottom": 12,
+              "left": 24
             },
             "margin": {
               "top": 0,
@@ -118,25 +113,179 @@
           }
         },
         {
+          "type": "Text",
+          "props": {
+            "id": "Text-contact",
+            "text": "Email: hello@studio.example — Hotline: 0123 456 789",
+            "typography": {
+              "fontSize": 17,
+              "fontWeight": "400",
+              "lineHeight": 1.7,
+              "letterSpacing": 0,
+              "textAlign": "left",
+              "color": "#57534e",
+              "textTransform": "none",
+              "fontStyle": "normal",
+              "textDecoration": "none"
+            },
+            "padding": {
+              "top": 0,
+              "right": 24,
+              "bottom": 64,
+              "left": 24
+            },
+            "margin": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        }
+      ]
+    },
+    "/about-us": {
+      "root": {
+        "props": {
+          "title": "About Us",
+          "pageBackground": "#fafaf9"
+        }
+      },
+      "content": [
+        {
+          "type": "Heading",
+          "props": {
+            "text": "About Us",
+            "tag": "h2",
+            "typography": {
+              "fontSize": 36,
+              "fontWeight": "700",
+              "lineHeight": 1.2,
+              "letterSpacing": 0,
+              "textAlign": "center",
+              "color": "#1c1917",
+              "textTransform": "none",
+              "fontStyle": "normal",
+              "textDecoration": "none"
+            },
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "margin": {
+              "top": 0,
+              "right": 0,
+              "bottom": 12,
+              "left": 0
+            },
+            "id": "Heading-7fff8095-c7bd-40fc-8148-64bcc599fb52"
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "Đây là about us",
+            "typography": {
+              "fontSize": 16,
+              "fontWeight": "400",
+              "lineHeight": 1.7,
+              "letterSpacing": 0,
+              "textAlign": "center",
+              "color": "#57534e",
+              "textTransform": "none",
+              "fontStyle": "normal",
+              "textDecoration": "none"
+            },
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "margin": {
+              "top": 0,
+              "right": 0,
+              "bottom": 12,
+              "left": 0
+            },
+            "id": "Text-9508ae15-632f-4621-a687-3572986dcf82"
+          }
+        },
+        {
+          "type": "CustomHtml",
+          "props": {
+            "padding": {
+              "top": 24,
+              "right": 24,
+              "bottom": 24,
+              "left": 24
+            },
+            "margin": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "background": "#fff",
+            "maxWidth": 1600,
+            "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Ornix — Section 5</title>\n  <style>\n/* CSS scope: #cw-section-5 — ghép nhiều section không đè style nhau */\n#cw-section-5, #cw-section-5 *, #cw-section-5 *::before, #cw-section-5 *::after { box-sizing: border-box; }\n@font-face {\n#cw-section-5 font-family: \"Mona Sans\"; font-weight: 400; font-style: normal; font-display: swap; src: url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_n4.cc3f184f0be0174773c72c5502453af88810902e.woff2\") format(\"woff2\"), #cw-section-5 url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_n4.fa36f5da9700fad1da93752dd8c5592c2878aaec.woff\") format(\"woff\"); }\n\n@font-face{ font-family: \"Mona Sans\"; font-weight: 700; font-style: normal; font-display: swap; src: url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_n7.7a174deadcf23a8eb1f5b59b4449a81c215adf52.woff2\") format(\"woff2\"), url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_n7.fa6a2ddc8ef9995151c1d6e9116360bce89c3e37.woff\") format(\"woff\"); }\n\n@font-face {\n#cw-section-5 font-family: \"Mona Sans\"; font-weight: 400; font-style: italic; font-display: swap; src: url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_i4.8afe827b8e1249d54e8235898b9437caf25eb86d.woff2\") format(\"woff2\"), #cw-section-5 url(\"https://ornix-lr8iktwm.myshopify.com/cdn/fonts/mona_sans/monasans_i4.f786ef97cfdb9bdf0574b567a4b4eb003f584167.woff\") format(\"woff\"); }\n\n:root{ --font-heading-family: \"Mona Sans\", sans-serif; --font-heading-weight: 400; --font-heading-style: normal; --font-heading-letter-spacing: -1px; --font-heading-transform: none; --h1-size: clamp(42px, 5.33vw, 64px); --h2-size: clamp(32px, 3.5vw, 42px); --h3-size: clamp(24px, 2.67vw, 32px); --h4-size: clamp(20px, 2vw, 24px); --h5-size: clamp(18px, 1.67vw, 20px); --h6-size: 16px; --font-body-family: \"Mona Sans\", sans-serif; --font-body-weight: 400; --font-body-style: normal; --font-body-size: 16px; --font-body-line-height: 1.7; --body-base: 16px; --font-size-xs: calc(var(--body-base) * 0.75); --font-size-sm: calc(var(--body-base) * 0.875); --font-size-base: var(--body-base); --font-size-lg: clamp(calc(var(--body-base) * 1), 1.5vw, calc(var(--body-base) * 1.125)); --font-size-xl: clamp(calc(var(--body-base) * 1.0625), 1.667vw, calc(var(--body-base) * 1.25)); --font-size-2xl: clamp(calc(var(--body-base) * 1.125), 1.833vw, calc(var(--body-base) * 1.375)); --color-background: #ffffff; --color-secondary-background: #fbeeed; --color-heading: #090412; --color-text: #767396; --color-links: #090412; --color-accent: #c15040; --color-border: #e7e5e4; --color-button-background: #c15040; --color-button-text: #ffffff; --color-button-border: #c15040; --color-button-hover-background: #090412; --color-button-hover-text: #ffffff; --color-button-hover-border: #090412; --color-secondary-button-background: #fbeeed; --color-secondary-button-text: #090412; --color-secondary-button-border: #fbeeed; --color-secondary-button-hover-background: #090412; --color-secondary-button-hover-text: #ffffff; --color-secondary-button-hover-border: #090412; --color-error: #c0392b; --color-success: #27ae60; --color-heading-05: rgba(9, 4, 18, 0.05); --color-heading-10: rgba(9, 4, 18, 0.1); --color-heading-20: rgba(9, 4, 18, 0.2); --color-heading-50: rgba(9, 4, 18, 0.5); --color-accent-10: rgba(193, 80, 64, 0.1); --color-accent-20: rgba(193, 80, 64, 0.2); --color-accent-50: rgba(193, 80, 64, 0.5); --color-border-50: rgba(231, 229, 228, 0.5); --color-border-20: rgba(231, 229, 228, 0.2); --btn-radius: 8px; --btn-border-width: 1px; --btn-padding-v: 12px; --btn-padding-h: 22px; --btn-font-weight: 500; --btn-text-transform: none; --btn-letter-spacing: 0px; --container-width: 1440px; --page-margin: 20px; --card-radius: 12px; --dropdowns-radius: 0px; --input-radius: 8px; --panels-radius: 12px; --controls-radius: 40px; --swatch-radius: 50%; --grid-gap: 30px; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-7: 28px; --space-8: 32px; --space-9: 36px; --space-10: 40px; --space-11: 44px; --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --section-spacing-v: clamp(60px, 8.33vw, 100px); --duration-fast: 200ms; --duration-base: 400ms; --duration-slow: 500ms; --duration-slower: 800ms; --ease-default: cubic-bezier(0.4, 0, 0.2, 1); --ease-in: cubic-bezier(0.4, 0, 1, 0.6); --ease-out: cubic-bezier(0, 0.4, 0.6, 1); --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55); --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1); --z-below: -10; --z-base: 0; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-overlay: 300; --z-modal: 400; --z-toast: 500; --z-top: 999; --shadow-sm: 0 1px 3px  rgba(9, 4, 18, 0.08); --shadow-md: 0 4px 16px rgba(9, 4, 18, 0.1); --shadow-lg: 0 12px 40px rgba(9, 4, 18, 0.12); --shadow-xl: 0 24px 64px rgba(9, 4, 18, 0.14); }\n#cw-section-5 *{ box-sizing: border-box; margin: 0px; }\n#cw-section-5{ display: flex; flex-direction: column; margin: 0px; min-height: 100svh; }\n#cw-section-5 img, #cw-section-5 picture, #cw-section-5 video, #cw-section-5 canvas, #cw-section-5 svg{ display: block; max-width: 100%; height: auto; }\n#cw-section-5 p{ text-wrap: pretty; }\n#cw-section-5 p, #cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6{ overflow-wrap: break-word; }\n#cw-section-5 p:empty{ display: none; }\n#cw-section-5 :is(p, #cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6):first-child, #cw-section-5 :empty:first-child + :where(p, #cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6){ margin-block-start: 0px; }\n#cw-section-5 :is(p, #cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6):last-child, #cw-section-5 :where(p, #cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6) + :has(+ :empty:last-child){ margin-block-end: 0px; }\n#cw-section-5 *, #cw-section-5 ::before, #cw-section-5 ::after{ font-family: var(--font-body-family); box-sizing: border-box; margin: 0px; padding: 0px; }\n#cw-section-5{ text-size-adjust: 100%; }\n#cw-section-5{ background-color: var(--color-background); color: var(--color-text); font-family: var(--font-body-family); font-weight: var(--font-body-weight); font-style: var(--font-body-style); font-size: var(--font-body-size); line-height: var(--font-body-line-height); -webkit-font-smoothing: antialiased; }\n#cw-section-5 h1, #cw-section-5 h2, #cw-section-5 h3, #cw-section-5 h4, #cw-section-5 h5, #cw-section-5 h6{ font-family: var(--font-heading-family); font-weight: var(--font-heading-weight); font-style: var(--font-heading-style); letter-spacing: var(--font-heading-letter-spacing); text-transform: var(--font-heading-transform); color: var(--color-heading); line-height: 1.2; }\n#cw-section-5 h1{ font-size: var(--h1-size); }\n#cw-section-5 a{ color: var(--color-links); text-decoration: none; transition: all var(--duration-base) var(--ease-default); }\n#cw-section-5 img, #cw-section-5 video{ display: block; max-width: 100%; }\n#cw-section-5 input, #cw-section-5 button, #cw-section-5 select, #cw-section-5 textarea{ font-family: var(--font-body-family); }\n\n@keyframes spin { \n  0% { transform: rotate(0deg); }\n  100% {\n#cw-section-5 transform: rotate(360deg); }\n}\n\n:focus-visible{ outline: 2px solid var(--color-accent); outline-offset: -2px; }\n#cw-section-5 .container{ width: 100%; max-width: var(--container-width); padding-inline: var(--page-margin); margin-inline: auto; }\n#cw-section-5{ --btn-padding-v-current: max(6px, calc(var(--btn-padding-v) - var(--space-1))); --btn-padding-h-current: max(10px, calc(var(--btn-padding-h) - var(--space-1))); }\n\n@media screen and (min-width: 768px) {\n#cw-section-5{ --btn-padding-v-current: max(8px, calc(var(--btn-padding-v) - 2px)); --btn-padding-h-current: max(12px, calc(var(--btn-padding-h) - 2px)); }\n}\n\n@media screen and (min-width: 1400px) {\n#cw-section-5{ --btn-padding-v-current: var(--btn-padding-v); --btn-padding-h-current: var(--btn-padding-h); }\n}\n#cw-section-5 .btn{ display: inline-flex; align-items: center; justify-content: center; padding: var(--btn-padding-v-current) var(--btn-padding-h-current); font-size: var(--font-size-base); font-weight: var(--btn-font-weight); text-decoration: none; text-transform: var(--btn-text-transform); letter-spacing: var(--btn-letter-spacing); border-radius: var(--btn-radius); transition: all var(--duration-base) var(--ease-default); border-width: var(--btn-border-width); border-style: solid; cursor: pointer; }\n#cw-section-5 .btn--primary{ border-color: var(--color-button-border); background: var(--color-button-background); color: var(--color-button-text); }\n#cw-section-5 .btn--primary:hover{ border-color: var(--color-button-hover-border); background: var(--color-button-hover-background); color: var(--color-button-hover-text); }\n#cw-section-5 .btn--secondary{ border-color: var(--color-secondary-button-border); background: var(--color-secondary-button-background); color: var(--color-secondary-button-text); }\n#cw-section-5 .btn--secondary:hover{ border-color: var(--color-secondary-button-hover-border); background: var(--color-secondary-button-hover-background); color: var(--color-secondary-button-hover-text); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn{ position: relative; z-index: 10; overflow: hidden; }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn--primary:hover{ border-color: var(--color-button-hover-border); background: var(--color-button-background); color: var(--color-button-text); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn--secondary:hover{ border-color: var(--color-secondary-button-hover-border); background: var(--color-secondary-button-background); color: var(--color-button-hover-text); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn::before{ content: \"\"; position: absolute; z-index: -2; border-radius: var(--btn-radius); width: 110%; left: -5%; height: 110%; top: -5%; transition: all var(--duration-slow) var(--ease-default); transform: translate(-110%); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn--primary::before{ background: var(--color-button-hover-background); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn--secondary::before{ background: var(--color-secondary-button-hover-background); }\n#cw-section-5 [data-btn-hover=\"sweep\"] .btn:hover::before{ transform: translate(0px); }\n#cw-section-5{ --swiper-theme-color: #007aff; }\n#cw-section-5 :host{ display: block; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }\n#cw-section-5 .swiper{ display: block; list-style: none; margin-left: auto; margin-right: auto; overflow: hidden; padding: 0px; position: relative; z-index: 1; }\n#cw-section-5 .swiper-wrapper{ box-sizing: initial; display: flex; height: 100%; position: relative; transition-property: transform; transition-timing-function: var(--swiper-wrapper-transition-timing-function,initial); width: 100%; z-index: 1; }\n#cw-section-5 .swiper-android .swiper-slide, #cw-section-5 .swiper-ios .swiper-slide, #cw-section-5 .swiper-wrapper{ transform: translateZ(0px); }\n#cw-section-5 .swiper-slide{ display: block; flex-shrink: 0; height: 100%; position: relative; transition-property: transform; width: 100%; }\n#cw-section-5 .swiper-watch-progress .swiper-slide-visible, #cw-section-5 .swiper:not(.swiper-watch-progress){\n  & .swiper-lazy-preloader {\nanimation: 1s linear 0s infinite normal none running swiper-preloader-spin; }\n}\n\n@keyframes swiper-preloader-spin { \n  0% { transform: rotate(0deg); }\n  100%{ transform: rotate(1turn); }\n}\n#cw-section-5{ --swiper-navigation-size: 44px; }\n\n@keyframes spin { \n  100% { transform: rotate(360deg); }\n}\n#cw-section-5 .btn:disabled{ cursor: not-allowed; pointer-events: none; }\n#cw-section-5 .slideshow .slideshow-wrapper{ position: relative; overflow: hidden; width: 100%; }\n#cw-section-5 .slideshow .swiper{ width: 100%; }\n#cw-section-5 .slideshow .swiper-slide{ position: relative; width: 100%; height: var(--mobile-height); display: flex; align-items: flex-end; overflow: hidden; padding-bottom: var(--section-spacing-v); }\n\n@media screen and (min-width: 992px) {\n#cw-section-5 .slideshow .swiper-slide{ height: var(--desktop-height); }\n}\n#cw-section-5 .slideshow .slideshow__media{ position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; }\n#cw-section-5 .slideshow .slideshow__media img, #cw-section-5 .slideshow .slideshow__media video, #cw-section-5 .slideshow .slideshow__media iframe{ width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; }\n#cw-section-5 .slideshow .slideshow__overlay{ position: absolute; inset: 0px; z-index: 1; pointer-events: none; }\n#cw-section-5 .slideshow .slideshow__content{ position: relative; z-index: 2; max-width: 600px; }\n#cw-section-5 .slideshow .slideshow__content--left{ text-align: left; }\n#cw-section-5 .slideshow .slideshow__heading{ margin: 0px 0px 12px; }\n#cw-section-5 .slideshow .slideshow__subtext{ margin: 0px 0px 36px; font-size: var(--font-size-lg); }\n#cw-section-5 .slideshow .slideshow-prev, #cw-section-5 .slideshow .slideshow-next{ width: var(--space-11); height: var(--space-11); border-radius: var(--input-radius); background-color: transparent; border: 1px solid rgba(255, 255, 255, 0.2); transition: all var(--duration-base) var(--ease-default); color: var(--color-button-text); cursor: pointer; display: flex; align-items: center; justify-content: center; }\n\n@media screen and (min-width: 750px) {\n#cw-section-5 .slideshow .slideshow-prev, #cw-section-5 .slideshow .slideshow-next{ width: var(--space-12); height: var(--space-12); }\n}\n#cw-section-5 .slideshow .slideshow-prev:hover, #cw-section-5 .slideshow .slideshow-next:hover{ border-color: var(--color-button-border); background-color: var(--color-button-background); color: var(--color-button-text); }\n#cw-section-5 .slideshow .slideshow-prev::after, #cw-section-5 .slideshow .slideshow-next::after{ display: none; }\n#cw-section-5 .slideshow .slideshow__heading, #cw-section-5 .slideshow .slideshow__subtext, #cw-section-5 .slideshow .slideshow__content .btn{ opacity: 0; transform: translateY(30px); transition: all var(--duration-base) var(--ease-default); }\n#cw-section-5 .slideshow-navigation-wrapper{ position: absolute; bottom: var(--section-spacing-v); display: flex; gap: var(--space-3); z-index: var(--z-dropdown); }\n#cw-section-5 .slideshow-navigation--right{ right: 30px; }\n\n@media screen and (min-width: 750px) {\n#cw-section-5 .slideshow-navigation-wrapper{ bottom: var(--section-spacing-v); }\n#cw-section-5 .slideshow-navigation--right{ right: var(--section-spacing-v); }\n}\n#cw-section-5 .slideshow-pagination{ position: absolute; top: 0px; z-index: var(--z-dropdown); }\n\n@keyframes marquee-left { \n  0% { transform: translate(0px); }\n  100% {\ntransform: translate(-100%); }\n}\n\n@keyframes marquee-right { \n  0% { transform: translate(-100%); }\n  100%{ transform: translate(0px); }\n}\n\n@keyframes testimonialFadeIn { \n  0% { opacity: 0; transform: translateY(8px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}\n\n@keyframes cart-spin { \n  100% { transform: rotate(360deg); }\n}\n  </style>\n</head>\n<body>\n<!-- Dán cả <style> + <div id=\"cw-section-5\"> vào trang của bạn -->\n<div id=\"cw-section-5\" class=\"cw-section\" data-cw-section=\"5\">\n<section id=\"shopify-section-template--22267281309940__slideshow\" class=\"shopify-section section-slideshow\" data-clone-section=\"5\">\n\n<link href=\"//ornix-lr8iktwm.myshopify.com/cdn/shop/t/3/assets/section-slideshow.css?v=133656106917030846971778051663\" rel=\"stylesheet\" type=\"text/css\" media=\"all\">\n\n\n<div class=\"slideshow\" data-section-id=\"template--22267281309940__slideshow\" data-autoplay=\"true\" data-delay=\"5000\" data-speed=\"800\" data-multiple=\"true\" data-show-pagination=\"true\" style=\"\n    --desktop-height: 800px;\n    --mobile-height: 700px;\n  \">\n  <div class=\"slideshow-wrapper\" role=\"region\" aria-label=\"Hero slideshow\">\n    <div class=\"swiper\" id=\"swiper-template--22267281309940__slideshow\">\n      <div class=\"swiper-wrapper\">\n        \n          \n\n          <div class=\"swiper-slide\" role=\"group\" aria-roledescription=\"slide\" aria-label=\"Slide 1 of 3\">\n            \n\n            \n              <div class=\"slideshow__media\" aria-hidden=\"true\">\n                <img src=\"https://ornix-lr8iktwm.myshopify.com/cdn/shop/files/woman-with-curly-hair-looks-into-camera-while-leaning-countertop-rustic-kitchen_jpg.jpg?v=1778175144&amp;width=1600\" width=\"2400\" height=\"1642\" loading=\"eager\" fetchpriority=\"high\" sizes=\"100vw\">\n              </div>\n\n            \n\n            \n            <div class=\"slideshow__overlay\" style=\"background-color: #090412; opacity: 0.35;\" aria-hidden=\"true\"></div>\n\n            \n            <div class=\"container\">\n              <div class=\"slideshow__content slideshow__content--left\">\n                \n                  <h1 class=\"slideshow__heading\" style=\"color: #ffffff;\">\n                    Curated fashion for the modern soul\n                  </h1>\n                \n\n                \n                  <p class=\"slideshow__subtext\" style=\"color: #ffffff;\">\n                    Refined pieces for the modern wardrobe where timeless design meets everyday comfort and effortless style.\n                  </p>\n                \n\n                \n                  <a href=\"https://ornix-lr8iktwm.myshopify.com/collections/all\" class=\"btn btn--primary\">\n                    Shop the look\n                  </a>\n                \n              </div>\n            </div>\n          </div>\n        \n          \n\n          <div class=\"swiper-slide\" role=\"group\" aria-roledescription=\"slide\" aria-label=\"Slide 2 of 3\">\n            \n\n            \n              <div class=\"slideshow__media\" aria-hidden=\"true\">\n                <img src=\"https://ornix-lr8iktwm.myshopify.com/cdn/shop/files/beautiful-young-woman-model-black-elegant-clothes-dark-background-with-metal-mesh_jpg.jpg?v=1778179833&amp;width=1600\" width=\"2400\" height=\"1600\" loading=\"eager\" fetchpriority=\"high\" sizes=\"100vw\">\n              </div>\n\n            \n\n            \n            <div class=\"slideshow__overlay\" style=\"background-color: #090412; opacity: 0.35;\" aria-hidden=\"true\"></div>\n\n            \n            <div class=\"container\">\n              <div class=\"slideshow__content slideshow__content--left\">\n                \n                  <h1 class=\"slideshow__heading\" style=\"color: #ffffff;\">\n                    Fashion that feels like you\n                  </h1>\n                \n\n                \n                  <p class=\"slideshow__subtext\" style=\"color: #ffffff;\">\n                    Timeless silhouettes, effortless style — made for the modern wardrobe.\n                  </p>\n                \n\n                \n                  <a href=\"https://ornix-lr8iktwm.myshopify.com/collections/all\" class=\"btn btn--primary\">\n                    Shop the look\n                  </a>\n                \n              </div>\n            </div>\n          </div>\n        \n          \n\n          <div class=\"swiper-slide\" role=\"group\" aria-roledescription=\"slide\" aria-label=\"Slide 3 of 3\">\n            \n\n            \n              <div class=\"slideshow__media\" aria-hidden=\"true\">\n                <img src=\"https://ornix-lr8iktwm.myshopify.com/cdn/shop/files/handsome-brunette-girl-wear-black-green-jacket-red-high-heels-sitting-posing-chair-studio-against-dark-brick-wall-studio-model-portrait.jpg?v=1778180065&amp;width=1600\" width=\"2400\" height=\"1597\" loading=\"eager\" fetchpriority=\"high\" sizes=\"100vw\">\n              </div>\n\n            \n\n            \n            <div class=\"slideshow__overlay\" style=\"background-color: #1c0d07; opacity: 0.35;\" aria-hidden=\"true\"></div>\n\n            \n            <div class=\"container\">\n              <div class=\"slideshow__content slideshow__content--left\">\n                \n                  <h1 class=\"slideshow__heading\" style=\"color: #ffffff;\">\n                    Style, Simplified\n                  </h1>\n                \n\n                \n                  <p class=\"slideshow__subtext\" style=\"color: #ffffff;\">\n                    Curated fashion for those who value quality over quantity.\n                  </p>\n                \n\n                \n                  <a href=\"https://ornix-lr8iktwm.myshopify.com/collections/all\" class=\"btn btn--secondary\">\n                    Shop the look\n                  </a>\n                \n              </div>\n            </div>\n          </div>\n        \n      </div>\n\n      \n        \n          <div class=\"slideshow-navigation-wrapper slideshow-navigation--right\">\n            <button class=\"slideshow-prev\" aria-label=\"Previous slide\">\n              <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path>\n    <path d=\"M15 6l-6 6l6 6\"></path>\n</svg>\n            </button>\n            <button class=\"slideshow-next\" aria-label=\"Next slide\">\n              <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path>\n    <path d=\"M9 6l6 6l-6 6\"></path>\n</svg>\n            </button>\n          </div>\n        \n\n        \n          <div class=\"slideshow-pagination\"></div>\n        \n      \n    </div>\n  </div>\n</div>\n\n\n</section>\n</div>\n</body>\n</html>\n",
+            "id": "CustomHtml-88374c08-f1e6-468f-96de-e26bdc1a768e"
+          }
+        },
+        {
           "type": "Container",
           "props": {
-            "id": "Container-features",
-            "layout": {
+            "children": [],
+            "structure": {
               "tag": "section",
-              "contentWidth": "boxed",
+              "display": "flex",
+              "contentWidth": "full",
               "width": 1140,
+              "customWidth": 100,
+              "customWidthUnit": "%",
+              "containerAlign": "center",
+              "heightMode": "auto",
+              "height": 400,
               "minHeight": 0,
+              "maxHeight": 0
+            },
+            "flexGrid": {
               "direction": "column",
               "justifyContent": "flex-start",
               "alignItems": "stretch",
+              "alignContent": "stretch",
               "flexWrap": "nowrap",
               "gap": 24,
-              "overflow": "visible"
+              "rowGap": 24,
+              "columnGap": 24,
+              "gridColumns": 3,
+              "gridRows": 1,
+              "gridAutoFlow": "row"
+            },
+            "position": {
+              "position": "relative",
+              "zIndex": 0,
+              "offsetTop": 0,
+              "offsetRight": 0,
+              "offsetBottom": 0,
+              "offsetLeft": 0,
+              "stickyOffset": 0
+            },
+            "advanced": {
+              "overflow": "visible",
+              "overflowX": "visible",
+              "overflowY": "visible",
+              "opacity": 100,
+              "hideDesktop": "no",
+              "hideTablet": "no",
+              "hideMobile": "no"
             },
             "padding": {
-              "top": 64,
+              "top": 48,
               "right": 24,
-              "bottom": 32,
+              "bottom": 48,
               "left": 24
             },
             "margin": {
@@ -152,15 +301,27 @@
               "imagePosition": "center center",
               "imageSize": "cover",
               "imageRepeat": "no-repeat",
+              "imageAttachment": "scroll",
               "gradient": "linear-gradient(135deg, #ecfdf5 0%, #fafaf9 100%)",
               "overlayColor": "#000000",
-              "overlayOpacity": 0
+              "overlayOpacity": 0,
+              "overlayBlend": "normal"
             },
             "border": {
               "width": 0,
+              "widthTop": 0,
+              "widthRight": 0,
+              "widthBottom": 0,
+              "widthLeft": 0,
+              "linked": "yes",
               "style": "solid",
               "color": "#e7e5e4",
-              "radius": 0
+              "radius": 0,
+              "radiusTopLeft": 0,
+              "radiusTopRight": 0,
+              "radiusBottomRight": 0,
+              "radiusBottomLeft": 0,
+              "radiusLinked": "yes"
             },
             "shadow": {
               "enabled": "no",
@@ -168,236 +329,31 @@
               "y": 8,
               "blur": 24,
               "spread": 0,
-              "color": "rgba(0,0,0,0.12)"
+              "color": "rgba(0,0,0,0.12)",
+              "inset": "no"
             },
-            "children": [
-              {
-                "type": "Heading",
-                "props": {
-                  "id": "Heading-1",
-                  "text": "Dịch vụ của chúng tôi",
-                  "tag": "h2",
-                  "typography": {
-                    "fontSize": 36,
-                    "fontWeight": "700",
-                    "lineHeight": 1.2,
-                    "letterSpacing": 0,
-                    "textAlign": "center",
-                    "color": "#1c1917",
-                    "textTransform": "none"
-                  },
-                  "padding": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 0,
-                    "left": 0
-                  },
-                  "margin": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 8,
-                    "left": 0
-                  }
-                }
-              },
-              {
-                "type": "Text",
-                "props": {
-                  "id": "Text-1",
-                  "text": "Tư vấn thiết kế, thi công và hoàn thiện không gian làm việc theo nhu cầu từng doanh nghiệp.",
-                  "typography": {
-                    "fontSize": 16,
-                    "fontWeight": "400",
-                    "lineHeight": 1.7,
-                    "letterSpacing": 0,
-                    "textAlign": "center",
-                    "color": "#57534e",
-                    "textTransform": "none"
-                  },
-                  "padding": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 0,
-                    "left": 0
-                  },
-                  "margin": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 12,
-                    "left": 0
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "Gallery",
-          "props": {
-            "id": "Gallery-1",
-            "images": [
-              {
-                "src": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-                "alt": "Văn phòng"
-              },
-              {
-                "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-                "alt": "Không gian làm việc"
-              },
-              {
-                "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-                "alt": "Đội ngũ"
-              }
-            ],
-            "columns": "3",
-            "gap": 16,
-            "radius": 12,
-            "aspectRatio": "4/3",
-            "padding": {
-              "top": 8,
-              "right": 24,
-              "bottom": 24,
-              "left": 24
-            },
-            "margin": {
-              "top": 0,
-              "right": 0,
-              "bottom": 0,
-              "left": 0
-            }
-          }
-        },
-        {
-          "type": "Container",
-          "props": {
-            "id": "Container-faq",
-            "layout": {
-              "tag": "section",
-              "contentWidth": "boxed",
-              "width": 800,
-              "minHeight": 0,
-              "direction": "column",
-              "justifyContent": "flex-start",
-              "alignItems": "stretch",
-              "flexWrap": "nowrap",
-              "gap": 16,
-              "overflow": "visible"
-            },
-            "padding": {
-              "top": 32,
-              "right": 24,
-              "bottom": 64,
-              "left": 24
-            },
-            "margin": {
-              "top": 0,
-              "right": 0,
-              "bottom": 0,
-              "left": 0
-            },
-            "background": {
-              "type": "color",
-              "color": "#fafaf9",
-              "imageUrl": "",
-              "imagePosition": "center center",
-              "imageSize": "cover",
-              "imageRepeat": "no-repeat",
-              "gradient": "linear-gradient(135deg, #ecfdf5 0%, #fafaf9 100%)",
-              "overlayColor": "#000000",
-              "overlayOpacity": 0
-            },
-            "border": {
-              "width": 0,
-              "style": "solid",
-              "color": "#e7e5e4",
-              "radius": 0
-            },
-            "shadow": {
-              "enabled": "no",
-              "x": 0,
-              "y": 8,
-              "blur": 24,
-              "spread": 0,
-              "color": "rgba(0,0,0,0.12)"
-            },
-            "children": [
-              {
-                "type": "Heading",
-                "props": {
-                  "id": "Heading-faq",
-                  "text": "Câu hỏi thường gặp",
-                  "tag": "h2",
-                  "typography": {
-                    "fontSize": 32,
-                    "fontWeight": "700",
-                    "lineHeight": 1.2,
-                    "letterSpacing": 0,
-                    "textAlign": "left",
-                    "color": "#1c1917",
-                    "textTransform": "none"
-                  },
-                  "padding": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 0,
-                    "left": 0
-                  },
-                  "margin": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 8,
-                    "left": 0
-                  }
-                }
-              },
-              {
-                "type": "Accordion",
-                "props": {
-                  "id": "Accordion-1",
-                  "items": [
-                    {
-                      "title": "Thời gian hoàn thiện một dự án?",
-                      "content": "Tùy quy mô. Dự án văn phòng vừa thường mất 4–8 tuần từ thiết kế đến bàn giao."
-                    },
-                    {
-                      "title": "Có hỗ trợ khảo sát tận nơi không?",
-                      "content": "Có. Đội ngũ sẽ đến khảo sát hiện trạng và tư vấn phương án phù hợp ngân sách."
-                    }
-                  ],
-                  "allowMultiple": "no",
-                  "titleColor": "#1c1917",
-                  "contentColor": "#57534e",
-                  "borderColor": "#e7e5e4",
-                  "background": "#ffffff",
-                  "activeBackground": "#f5f5f4",
-                  "titleSize": 16,
-                  "contentSize": 14,
-                  "radius": 10,
-                  "padding": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 0,
-                    "left": 0
-                  },
-                  "margin": {
-                    "top": 0,
-                    "right": 0,
-                    "bottom": 0,
-                    "left": 0
-                  }
-                }
-              }
-            ]
+            "id": "Container-61b6175a-910d-4eb8-8cd5-c7be3e3ccaf4"
           }
         }
-      ]
+      ],
+      "zones": {}
     }
   },
   "meta": {
     "/": {
       "path": "/",
       "title": "Trang chủ",
-      "updatedAt": "2026-07-25T04:32:58.237Z"
+      "updatedAt": "2026-07-25T08:14:42.857Z"
+    },
+    "/contact": {
+      "path": "/contact",
+      "title": "Liên hệ",
+      "updatedAt": "2026-07-25T07:22:29.122Z"
+    },
+    "/about-us": {
+      "path": "/about-us",
+      "title": "About Us",
+      "updatedAt": "2026-07-25T08:01:26.011Z"
     }
   }
 }
