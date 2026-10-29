@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteChrome } from "@/components/builder/SiteChrome";
 import { getFooter, getHeader, getPage, getSettings } from "@/lib/pages";
+import { getSettingsWithStoreProducts } from "@/lib/store";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = getSettings();
@@ -15,7 +16,7 @@ export default function HomePage() {
   const page = getPage("/");
   const header = getHeader();
   const footer = getFooter();
-  const settings = getSettings();
+  const settings = getSettingsWithStoreProducts();
 
   if (!page) {
     return (

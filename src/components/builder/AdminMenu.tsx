@@ -95,6 +95,14 @@ export function AdminMenu() {
               <span>Cài đặt website</span>
               <span style={hint}>logo, sản phẩm</span>
             </Link>
+            <Link href="/admin/products" style={itemStyle} onClick={() => setOpen(false)}>
+              <span>Sản phẩm (Shopify)</span>
+              <span style={hint}>kho sản phẩm thật</span>
+            </Link>
+            <Link href="/admin/orders" style={itemStyle} onClick={() => setOpen(false)}>
+              <span>Đơn hàng</span>
+              <span style={hint}>quản lý đơn</span>
+            </Link>
             <Link href={currentEdit} style={itemStyle} onClick={() => setOpen(false)}>
               <span>Body trang hiện tại</span>
               <span style={hint}>{pathname || "/"}</span>

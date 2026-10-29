@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteChrome } from "@/components/builder/SiteChrome";
 import { getFooter, getHeader, getPage, getSettings } from "@/lib/pages";
+import { getSettingsWithStoreProducts } from "@/lib/store";
 
 export async function generateMetadata({
   params,
@@ -46,7 +47,7 @@ export default async function PublicPage({
       header={getHeader()}
       footer={getFooter()}
       page={page}
-      settings={getSettings()}
+      settings={getSettingsWithStoreProducts()}
     />
   );
 }

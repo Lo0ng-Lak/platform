@@ -355,5 +355,175 @@
       "title": "About Us",
       "updatedAt": "2026-07-25T08:01:26.011Z"
     }
+  },
+  "products": [
+    {
+      "id": "sp-ao-thun-basic",
+      "slug": "ao-thun-basic-trang",
+      "name": "Áo thun Basic trắng",
+      "price": 199000,
+      "compareAtPrice": 259000,
+      "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=900&q=80",
+      "description": "Áo thun cotton 100% dày dặn, form regular thoải mái. Thoáng mát, ít nhăn, giặt máy thoải mái — món đồ cơ bản nên có trong mọi tủ đồ.",
+      "collection": "Thời trang",
+      "stock": 48,
+      "variants": [
+        {
+          "label": "Size",
+          "options": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ]
+        },
+        {
+          "label": "Màu",
+          "options": [
+            "Trắng",
+            "Đen",
+            "Xám"
+          ]
+        }
+      ],
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "sp-hoodie-oversize",
+      "slug": "hoodie-oversize-be",
+      "name": "Hoodie oversize màu be",
+      "price": 449000,
+      "compareAtPrice": 549000,
+      "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=900&q=80",
+      "description": "Hoodie nỉ bông oversize, mũ trùm 2 lớp và túi kangaroo tiện lợi. Form rộng unisex, mặc ấm mà vẫn nhẹ, hợp đi học, đi làm và dạo phố.",
+      "collection": "Thời trang",
+      "stock": 32,
+      "variants": [
+        {
+          "label": "Size",
+          "options": [
+            "M",
+            "L",
+            "XL"
+          ]
+        },
+        {
+          "label": "Màu",
+          "options": [
+            "Be",
+            "Đen",
+            "Xanh rêu"
+          ]
+        }
+      ],
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "sp-tui-tote-canvas",
+      "slug": "tui-tote-canvas",
+      "name": "Túi tote canvas",
+      "price": 159000,
+      "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=900&q=80",
+      "description": "Túi tote vải canvas dày, quai đeo chắc chắn, đựng vừa laptop 14 inch, sách và đồ cá nhân. Có ngăn nhỏ bên trong để điện thoại và ví.",
+      "collection": "Phụ kiện",
+      "stock": 75,
+      "variants": [
+        {
+          "label": "Màu",
+          "options": [
+            "Trắng kem",
+            "Đen",
+            "Nâu"
+          ]
+        }
+      ],
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    },
+    {
+      "id": "sp-mu-luoi-trai",
+      "slug": "mu-luoi-trai-theu-logo",
+      "name": "Mũ lưỡi trai thêu logo",
+      "price": 129000,
+      "compareAtPrice": 169000,
+      "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=900&q=80",
+      "description": "Mũ lưỡi trai kaki thêu logo nổi, vành cong và khoá điều chỉnh phía sau — vừa mọi vòng đầu. Chống nắng tốt, phối được với nhiều outfit.",
+      "collection": "Phụ kiện",
+      "stock": 120,
+      "variants": [
+        {
+          "label": "Màu",
+          "options": [
+            "Đen",
+            "Trắng",
+            "Xanh navy"
+          ]
+        }
+      ],
+      "createdAt": "2026-10-29T08:00:00.000Z"
+    }
+  ],
+  "orders": [],
+  "settings": {
+    "siteName": "Studio",
+    "tagline": "Thiết kế không gian làm việc hiện đại",
+    "logoUrl": "",
+    "faviconUrl": "",
+    "primaryColor": "#0f766e",
+    "contact": {
+      "email": "hello@studio.vn",
+      "phone": "0123 456 789",
+      "address": "123 Nguyễn Huệ, Quận 1, TP.HCM",
+      "hours": "T2–T6: 9:00–18:00"
+    },
+    "social": {
+      "facebook": "",
+      "instagram": "",
+      "tiktok": "",
+      "youtube": "",
+      "zalo": ""
+    },
+    "products": [
+      {
+        "id": "p1",
+        "name": "Áo thun Premium",
+        "price": "299.000đ",
+        "compareAt": "399.000đ",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
+        "badge": "Sale",
+        "href": "#",
+        "category": "Áo",
+        "description": "Áo thun cotton cao cấp"
+      },
+      {
+        "id": "p2",
+        "name": "Giày sneaker",
+        "price": "1.290.000đ",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+        "badge": "New",
+        "href": "#",
+        "category": "Giày",
+        "description": "Sneaker nhẹ, êm"
+      },
+      {
+        "id": "p3",
+        "name": "Túi canvas",
+        "price": "450.000đ",
+        "image": "https://images.unsplash.com/photo-1548036328-c165bc401e83?w=600&q=80",
+        "href": "#",
+        "category": "Phụ kiện",
+        "description": "Túi vải bền đẹp"
+      },
+      {
+        "id": "p4",
+        "name": "Đồng hồ minimal",
+        "price": "890.000đ",
+        "compareAt": "1.100.000đ",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
+        "badge": "-20%",
+        "href": "#",
+        "category": "Phụ kiện",
+        "description": "Đồng hồ tối giản"
+      }
+    ]
   }
 }

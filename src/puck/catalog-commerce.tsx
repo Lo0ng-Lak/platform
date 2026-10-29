@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { CartDrawerView, MiniCartDropdown } from "@/components/store/CartBlocks";
 import {
   boxedFromProps,
   commonSpacingFields,
@@ -12,112 +12,22 @@ import {
   sectionFromProps,
 } from "./section-shared";
 
-const mockCartItems = demoProducts.slice(0, 2).map((p) => ({ ...p, qty: 1 }));
-
 export const catalogCommerceComponents = {
   MiniCart: {
     label: "Mini Cart",
     fields: {
-      itemCount: { type: "number" as const, label: "Số SP trong giỏ", min: 0 },
+      itemCount: { type: "number" as const, label: "Số SP trong giỏ (chỉ hiện khi chưa có giỏ)", min: 0 },
       ...commonSpacingFields,
     },
     defaultProps: {
-      itemCount: 2,
+      itemCount: 0,
       spacing: defaultSpacingGroup(16, { background: "#fff", maxWidth: 360 }),
     },
     render: (props: Record<string, unknown>) => {
       const { itemCount } = props as { itemCount: number };
-      const [open, setOpen] = useState(false);
       return sectionFromProps(
         props,
-        boxedFromProps(
-          props,
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <button
-              type="button"
-              onClick={() => setOpen(!open)}
-              style={{
-                position: "relative",
-                background: "none",
-                border: "none",
-                fontSize: 24,
-                cursor: "pointer",
-              }}
-            >
-              🛒
-              {itemCount > 0 ? (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: -4,
-                    right: -8,
-                    background: "#ef4444",
-                    color: "#fff",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    width: 18,
-                    height: 18,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {itemCount}
-                </span>
-              ) : null}
-            </button>
-            {open ? (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  right: 0,
-                  marginTop: 8,
-                  width: 300,
-                  background: "#fff",
-                  border: "1px solid #e2e8f0",
-                  borderRadius: 12,
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                  zIndex: 10,
-                  padding: 16,
-                }}
-              >
-                <div style={{ fontWeight: 700, marginBottom: 12 }}>Giỏ hàng ({itemCount})</div>
-                {mockCartItems.map((item, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10, fontSize: 13 }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 6 }}
-                    />
-                    <div>
-                      <div style={{ fontWeight: 600 }}>{item.name}</div>
-                      <div style={{ color: "#0f766e" }}>{item.price}</div>
-                    </div>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    background: "#0f766e",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    marginTop: 8,
-                  }}
-                >
-                  Thanh toán
-                </button>
-              </div>
-            ) : null}
-          </div>
-        )
+        boxedFromProps(props, <MiniCartDropdown fallbackCount={itemCount} />)
       );
     },
   },
@@ -140,61 +50,7 @@ export const catalogCommerceComponents = {
       const { title } = props as { title: string };
       return sectionFromProps(
         props,
-        <div
-          style={{
-            maxWidth: resolveSpacing(props).maxWidth,
-            marginLeft: "auto",
-            border: "1px solid #e2e8f0",
-            borderRadius: "12px 0 0 12px",
-            padding: 24,
-            minHeight: 400,
-          }}
-        >
-          {title ? <h3 style={{ margin: "0 0 20px", fontSize: 18, fontWeight: 700 }}>{title}</h3> : null}
-          {mockCartItems.map((item, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                gap: 12,
-                paddingBottom: 16,
-                marginBottom: 16,
-                borderBottom: "1px solid #f1f5f9",
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={item.image}
-                alt={item.name}
-                style={{ width: 72, height: 72, objectFit: "cover", borderRadius: 8 }}
-              />
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 600, fontSize: 14 }}>{item.name}</div>
-                <div style={{ color: "#0f766e", fontWeight: 700, marginTop: 4 }}>{item.price}</div>
-                <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>SL: {item.qty}</div>
-              </div>
-            </div>
-          ))}
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, marginBottom: 16 }}>
-            <span>Tổng</span>
-            <span>1.589.000đ</span>
-          </div>
-          <button
-            type="button"
-            style={{
-              width: "100%",
-              padding: 14,
-              background: "#0f766e",
-              color: "#fff",
-              border: "none",
-              borderRadius: 8,
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            Thanh toán
-          </button>
-        </div>
+        <CartDrawerView title={title} maxWidth={resolveSpacing(props).maxWidth} />
       );
     },
   },

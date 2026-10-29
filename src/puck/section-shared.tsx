@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
+import { AddToCartButton } from "@/components/store/AddToCartButton";
 import { imageField } from "@/components/builder/ImageField";
 import { numberField } from "@/components/builder/NumberField";
 import {
@@ -171,6 +172,11 @@ export type DemoProduct = {
   image: string;
   badge?: string;
   href?: string;
+  /** Có khi là sản phẩm thật từ kho SP — bật nút Thêm vào giỏ */
+  productId?: string;
+  slug?: string;
+  priceValue?: number;
+  stock?: number;
 };
 
 export const demoProducts: DemoProduct[] = [
@@ -221,11 +227,13 @@ export function ProductCard({
   product: DemoProduct;
   radius?: number;
 }) {
+  const isStoreProduct = Boolean(product.productId && product.slug);
+  const outOfStock = isStoreProduct && (product.stock ?? 1) <= 0;
   return (
-    <a
-      href={product.href || "#"}
+    <div
       style={{
-        display: "block",
+        display: "flex",
+        flexDirection: "column",
         textDecoration: "none",
         color: "inherit",
         background: "#fff",
@@ -235,35 +243,64 @@ export function ProductCard({
         height: "100%",
       }}
     >
-      <div style={{ position: "relative", aspectRatio: "1", background: "#f1f5f9" }}>
-        {product.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={product.image}
-            alt={product.name}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        ) : null}
-        {product.badge ? (
-          <span
-            style={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              background: "#0f172a",
-              color: "#fff",
-              fontSize: 11,
-              fontWeight: 600,
-              padding: "4px 8px",
-              borderRadius: 6,
-            }}
-          >
-            {product.badge}
-          </span>
-        ) : null}
-      </div>
-      <div style={{ padding: 14 }}>
-        <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 6 }}>{product.name}</div>
+      <a
+        href={product.href || "#"}
+        style={{ display: "block", textDecoration: "none", color: "inherit" }}
+      >
+        <div style={{ position: "relative", aspectRatio: "1", background: "#f1f5f9" }}>
+          {product.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.image}
+              alt={product.name}
+              loading="lazy"
+              decoding="async"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : null}
+          {product.badge ? (
+            <span
+              style={{
+                position: "absolute",
+                top: 10,
+                left: 10,
+                background: "#0f172a",
+                color: "#fff",
+                fontSize: 11,
+                fontWeight: 600,
+                padding: "4px 8px",
+                borderRadius: 6,
+              }}
+            >
+              {product.badge}
+            </span>
+          ) : null}
+          {outOfStock ? (
+            <span
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                background: "#ef4444",
+                color: "#fff",
+                fontSize: 11,
+                fontWeight: 600,
+                padding: "4px 8px",
+                borderRadius: 6,
+              }}
+            >
+              Hết hàng
+            </span>
+          ) : null}
+        </div>
+      </a>
+      <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
+        <a
+          href={product.href || "#"}
+          style={{ fontWeight: 600, fontSize: 14, textDecoration: "none", color: "inherit" }}
+        >
+          {product.name}
+        </a>
         <div style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
           <span style={{ fontWeight: 700, color: "#0f766e" }}>{product.price}</span>
           {product.compareAt ? (
@@ -272,8 +309,21 @@ export function ProductCard({
             </span>
           ) : null}
         </div>
+        {isStoreProduct ? (
+          <div style={{ marginTop: "auto" }}>
+            <AddToCartButton
+              productId={product.productId as string}
+              slug={product.slug as string}
+              name={product.name}
+              image={product.image}
+              price={product.priceValue ?? 0}
+              disabled={outOfStock}
+              style={{ width: "100%", padding: "9px 12px", fontSize: 13 }}
+            />
+          </div>
+        ) : null}
       </div>
-    </a>
+    </div>
   );
 }
 

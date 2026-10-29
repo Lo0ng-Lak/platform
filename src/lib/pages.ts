@@ -6,9 +6,11 @@ import {
   type SiteProduct,
   type SiteSettings,
 } from "@/lib/settings-types";
+import { SEED_PRODUCTS, type Order, type Product } from "@/lib/store-types";
 
 export type { SiteProduct, SiteSettings };
 export { defaultSettings };
+export type { Order, Product };
 
 export type PageMeta = {
   path: string;
@@ -22,9 +24,22 @@ export type Database = {
   pages: Record<string, Data>;
   meta: Record<string, PageMeta>;
   settings: SiteSettings;
+  /** Sản phẩm thật của cửa hàng (kiểu Shopify) — xem src/lib/store.ts */
+  products: Product[];
+  /** Đơn hàng của cửa hàng — xem src/lib/store.ts */
+  orders: Order[];
 };
 
 const DB_PATH = path.join(process.cwd(), "database.json");
+
+/**
+ * Cache bản parse của database.json theo mtime/size của file.
+ * Trước đây mỗi getter (getPage, getHeader, getSettings…) đều đọc + parse lại
+ * toàn bộ file từ đĩa — một lần render trang gọi 4+ lần như vậy. Nay chỉ parse
+ * lại khi file thật sự thay đổi; mỗi lần đọc trả về structuredClone để caller
+ * mutate tự do mà không làm bẩn cache.
+ */
+let dbCache: { mtimeMs: number; size: number; data: Database } | null = null;
 
 export function emptyRegion(title: string): Data {
   return {
@@ -53,18 +68,32 @@ export function readDatabase(): Database {
       pages: {},
       meta: {},
       settings: defaultSettings(),
+      products: structuredClone(SEED_PRODUCTS),
+      orders: [],
     };
+  }
+
+  const stat = fs.statSync(DB_PATH);
+  if (
+    dbCache &&
+    dbCache.mtimeMs === stat.mtimeMs &&
+    dbCache.size === stat.size
+  ) {
+    return structuredClone(dbCache.data);
   }
 
   const raw = JSON.parse(fs.readFileSync(DB_PATH, "utf-8")) as Partial<Database> & {
     pages?: Record<string, Data>;
   };
 
-  return {
+  const normalized: Database = {
     header: raw.header ?? emptyRegion("Header"),
     footer: raw.footer ?? emptyRegion("Footer"),
     pages: raw.pages ?? {},
     meta: raw.meta ?? {},
+    // DB cũ chưa có products → seed 4 sản phẩm mẫu; orders mặc định rỗng.
+    products: raw.products ?? structuredClone(SEED_PRODUCTS),
+    orders: raw.orders ?? [],
     settings: {
       ...defaultSettings(),
       ...(raw.settings || {}),
@@ -79,10 +108,23 @@ export function readDatabase(): Database {
       products: raw.settings?.products ?? defaultSettings().products,
     },
   };
+
+  dbCache = { mtimeMs: stat.mtimeMs, size: stat.size, data: normalized };
+  return structuredClone(normalized);
 }
 
 export function writeDatabase(db: Database) {
   fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), "utf-8");
+  try {
+    const stat = fs.statSync(DB_PATH);
+    dbCache = {
+      mtimeMs: stat.mtimeMs,
+      size: stat.size,
+      data: structuredClone(db),
+    };
+  } catch {
+    dbCache = null;
+  }
 }
 
 export function getSettings(): SiteSettings {

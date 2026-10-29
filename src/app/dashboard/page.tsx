@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import { pageTemplates } from "@/lib/templates";
 
 type PageMeta = {
   path: string;
@@ -46,6 +47,27 @@ export default function DashboardPage() {
 
     setTitle("");
     setPath("");
+    await loadPages();
+  }
+
+  const [templateMsg, setTemplateMsg] = useState("");
+
+  async function onUseTemplate(templateId: string) {
+    setTemplateMsg("");
+    const tpl = pageTemplates.find((t) => t.id === templateId);
+    const res = await fetch("/api/pages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ templateId }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setTemplateMsg(data.error || "Không tạo được trang từ mẫu");
+      return;
+    }
+    setTemplateMsg(
+      `Đã tạo trang “${tpl?.name}” tại ${tpl?.suggestedPath}. Bấm “Sửa Body” ở danh sách trang để tuỳ chỉnh.`
+    );
     await loadPages();
   }
 
@@ -149,6 +171,102 @@ export default function DashboardPage() {
                 Cài đặt website
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* Shopify store */}
+        <section className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-stone-900">
+            Cửa hàng (Shopify)
+          </h2>
+          <p className="mt-1 text-sm text-stone-500">
+            Sản phẩm thật, giỏ hàng, checkout và đơn hàng — vòng bán hàng hoàn chỉnh.
+          </p>
+          <div className="mt-5 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-xl border border-emerald-100 bg-emerald-50/60 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-800">
+                Sản phẩm
+              </p>
+              <p className="mt-1 text-sm text-stone-600">
+                Thêm/sửa/xoá sản phẩm, giá bán, giá sale và tồn kho.
+              </p>
+              <Link
+                href="/admin/products"
+                className="mt-4 inline-flex rounded-md bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800"
+              >
+                Quản lý sản phẩm
+              </Link>
+            </div>
+            <div className="rounded-xl border border-violet-100 bg-violet-50/60 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-violet-800">
+                Đơn hàng
+              </p>
+              <p className="mt-1 text-sm text-stone-600">
+                Xem đơn khách đặt, đổi trạng thái giao hàng, doanh thu.
+              </p>
+              <Link
+                href="/admin/orders"
+                className="mt-4 inline-flex rounded-md bg-violet-700 px-3 py-2 text-sm font-medium text-white hover:bg-violet-800"
+              >
+                Quản lý đơn hàng
+              </Link>
+            </div>
+            <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-stone-700">
+                Cửa hàng
+              </p>
+              <p className="mt-1 text-sm text-stone-600">
+                Xem trang bán hàng như khách: danh sách SP, giỏ, checkout.
+              </p>
+              <Link
+                href="/shop"
+                className="mt-4 inline-flex rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-800"
+              >
+                Xem cửa hàng
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Page templates */}
+        <section className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-stone-900">
+            Giao diện mẫu
+          </h2>
+          <p className="mt-1 text-sm text-stone-500">
+            Tạo nhanh một trang hoàn chỉnh từ mẫu có sẵn — sau đó sửa nội dung
+            bằng editor kéo thả.
+          </p>
+          {templateMsg ? (
+            <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+              {templateMsg}
+            </p>
+          ) : null}
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {pageTemplates.map((tpl) => (
+              <div
+                key={tpl.id}
+                className="flex flex-col rounded-xl border border-stone-200 bg-stone-50/60 p-4"
+              >
+                <p className="text-2xl" aria-hidden>
+                  {tpl.icon}
+                </p>
+                <p className="mt-2 font-medium text-stone-900">{tpl.name}</p>
+                <p className="mt-1 flex-1 text-sm text-stone-600">
+                  {tpl.description}
+                </p>
+                <p className="mt-2 text-xs text-stone-400">
+                  Đường dẫn gợi ý: {tpl.suggestedPath}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void onUseTemplate(tpl.id)}
+                  className="mt-4 rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-800"
+                >
+                  Tạo trang từ mẫu này
+                </button>
+              </div>
+            ))}
           </div>
         </section>
 

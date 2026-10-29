@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   createPage,
   deletePage,
+  getPage,
   listPages,
   normalizePath,
   renamePage,
@@ -14,6 +15,7 @@ import {
   footerTemplate,
   headerTemplate,
   homepageTemplate,
+  pageTemplates,
   servicesTemplate,
 } from "@/lib/templates";
 import { revalidatePath } from "next/cache";
@@ -28,6 +30,7 @@ export async function POST(request: Request) {
     title?: string;
     seedHome?: boolean;
     seedDemoSite?: boolean;
+    templateId?: string;
     renameFrom?: string;
     renameTo?: string;
   };
@@ -44,6 +47,29 @@ export async function POST(request: Request) {
         ok: true,
         pages: listPages(),
       });
+    }
+
+    if (body.templateId) {
+      const tpl = pageTemplates.find((t) => t.id === body.templateId);
+      if (!tpl) {
+        return NextResponse.json(
+          { error: "Không tìm thấy giao diện mẫu" },
+          { status: 400 }
+        );
+      }
+      const pagePath = normalizePath(body.path || tpl.suggestedPath);
+      const title = body.title?.trim() || tpl.name;
+      if (!pagePath || pagePath === "/" || getPage(pagePath)) {
+        return NextResponse.json(
+          { error: "Đường dẫn không hợp lệ hoặc trang đã tồn tại" },
+          { status: 400 }
+        );
+      }
+      // Clone để savePage không giữ tham chiếu tới dữ liệu mẫu dùng chung
+      savePage(pagePath, structuredClone(tpl.data), title);
+      revalidatePath(pagePath);
+      revalidatePath("/", "layout");
+      return NextResponse.json({ ok: true, pages: listPages() });
     }
 
     if (body.renameFrom && body.renameTo) {

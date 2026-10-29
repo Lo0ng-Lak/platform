@@ -1,5 +1,11 @@
 export type SiteProduct = {
   id: string;
+  /** Có khi sản phẩm đến từ kho SP thật (src/lib/store.ts) — dùng cho giỏ hàng */
+  productId?: string;
+  slug?: string;
+  stock?: number;
+  /** Giá dạng số (VND) khi là SP thật — để cộng giỏ hàng */
+  priceValue?: number;
   name: string;
   price: string;
   compareAt?: string;
