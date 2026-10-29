@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { AdminMenu } from "@/components/builder/AdminMenu";
+import { CartProvider } from "@/components/store/CartContext";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -32,8 +33,10 @@ export default function RootLayout({
       className={`${dmSans.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        {children}
-        <AdminMenu />
+        <CartProvider>
+          {children}
+          <AdminMenu />
+        </CartProvider>
       </body>
     </html>
   );

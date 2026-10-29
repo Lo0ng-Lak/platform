@@ -6,6 +6,7 @@ import { catalogCategoryComponents } from "./catalog-categories";
 import { catalogMediaComponents } from "./catalog-media";
 import { catalogContentComponents } from "./catalog-content";
 import { catalogCommerceComponents } from "./catalog-commerce";
+import { catalogShowcaseComponents } from "./catalog-showcase";
 
 export const catalogSectionComponents = {
   ...catalogHeroComponents,
@@ -14,6 +15,7 @@ export const catalogSectionComponents = {
   ...catalogMediaComponents,
   ...catalogContentComponents,
   ...catalogCommerceComponents,
+  ...catalogShowcaseComponents,
 };
 
 /** Danh mục kiểu “sớ” — title có số thứ tự, mặc định thu gọn */
@@ -193,6 +195,19 @@ export const catalogCategoryMap = {
     title: "16 · Custom HTML",
     defaultExpanded: false,
     components: ["CustomHtml"],
+  },
+  showcase: {
+    title: "17 · Block đẹp mới ★",
+    defaultExpanded: true,
+    components: [
+      "PricingCards",
+      "FeatureBentoPro",
+      "GradientCtaBanner",
+      "TeamShowcase",
+      "TestimonialWall",
+      "ComparisonTable",
+      "MenuPriceList",
+    ],
   },
 };
 

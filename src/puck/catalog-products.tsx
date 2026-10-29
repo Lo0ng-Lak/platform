@@ -45,6 +45,10 @@ function siteProductsToDemo(products: SiteProduct[]): DemoProduct[] {
     image: p.image,
     badge: p.badge,
     href: p.href,
+    productId: p.productId,
+    slug: p.slug,
+    priceValue: p.priceValue,
+    stock: p.stock,
   }));
 }
 
